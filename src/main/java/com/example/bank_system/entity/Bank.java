@@ -1,4 +1,4 @@
-package com.example.bank_system.Entity;
+package com.example.bank_system.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "bank")
-public class bank {
+public class Bank {
 	
 	@Id
 	@Column(name = "card")
@@ -39,7 +39,10 @@ public class bank {
 	
 	@Column(name = "offer")
 	private Integer offer;
-	
+
+	public Bank() {
+		super();
+	}
 
 	public String getCard() {
 		return card;

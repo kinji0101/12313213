@@ -10,5 +10,5 @@ CREATE TABLE IF NOT EXISTS `bank_system` (
   `loanRate` int DEFAULT NULL,
   `offer` int DEFAULT NULL,
   PRIMARY KEY (`card`)
-) 
-) 
+);
+
