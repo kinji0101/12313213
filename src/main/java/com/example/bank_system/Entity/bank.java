@@ -19,6 +19,9 @@ public class bank {
 	@Column(name = "address")
 	private String address;
 	
+	@Column(name = "email")
+	private String email;
+	
 	@Column(name = "phoneNumber")
 	private Integer phoneNumber;
 	
@@ -36,6 +39,7 @@ public class bank {
 	
 	@Column(name = "offer")
 	private Integer offer;
+	
 
 	public String getCard() {
 		return card;
@@ -107,6 +111,14 @@ public class bank {
 
 	public void setOffer(Integer offer) {
 		this.offer = offer;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	
