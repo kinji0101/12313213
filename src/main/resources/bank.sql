@@ -1,4 +1,4 @@
-CREATE TABLE `bank_system` (
+CREATE TABLE IF NOT EXISTS`bank_system` (
   `card` varchar(50) NOT NULL,
   `name` varchar(45) NOT NULL,
   `address` varchar(45) DEFAULT NULL,
