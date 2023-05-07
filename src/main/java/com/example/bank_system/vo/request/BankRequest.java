@@ -1,5 +1,7 @@
 package com.example.bank_system.vo.request;
 
+import java.time.LocalDateTime;
+
 public class BankRequest {
 
 	public String card;
@@ -16,15 +18,17 @@ public class BankRequest {
 
 	public String phoneNumber;
 
-	public Integer deposit;
+	public Double deposit;
 
-	public Integer depositRate;
+	public Double depositRate;
 
-	public Integer loan;
+	public Double loan;
 
-	public Integer loanRates;
+	public Double loanRate;
 
 	public Integer offer;
+
+	public LocalDateTime createDate;
 
 	public Integer amount;
 
@@ -33,8 +37,8 @@ public class BankRequest {
 	}
 
 	public BankRequest(String card, String name, String address, String account, String password, String email,
-			String phoneNumber, Integer deposit, Integer depositRate, Integer loan, Integer loanRates, Integer offer,
-			Integer amount) {
+			String phoneNumber, Double deposit, Double depositRate, Double loan, Double loanRate, Integer offer,
+			LocalDateTime createDate, Integer amount) {
 		super();
 		this.card = card;
 		this.name = name;
@@ -46,8 +50,9 @@ public class BankRequest {
 		this.deposit = deposit;
 		this.depositRate = depositRate;
 		this.loan = loan;
-		this.loanRates = loanRates;
+		this.loanRate = loanRate;
 		this.offer = offer;
+		this.createDate = createDate;
 		this.amount = amount;
 	}
 
@@ -107,36 +112,36 @@ public class BankRequest {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Integer getDeposit() {
+	public Double getDeposit() {
 		return deposit;
 	}
 
-	public void setDeposit(Integer deposit) {
+	public void setDeposit(Double deposit) {
 		this.deposit = deposit;
 	}
 
-	public Integer getDepositRate() {
+	public Double getDepositRate() {
 		return depositRate;
 	}
 
-	public void setDepositRate(Integer depositRate) {
+	public void setDepositRate(Double depositRate) {
 		this.depositRate = depositRate;
 	}
 
-	public Integer getLoan() {
+	public Double getLoan() {
 		return loan;
 	}
 
-	public void setLoan(Integer loan) {
+	public void setLoan(Double loan) {
 		this.loan = loan;
 	}
 
-	public Integer getLoanRates() {
-		return loanRates;
+	public Double getLoanRate() {
+		return loanRate;
 	}
 
-	public void setLoanRates(Integer loanRates) {
-		this.loanRates = loanRates;
+	public void setLoanRate(Double loanRate) {
+		this.loanRate = loanRate;
 	}
 
 	public Integer getOffer() {
@@ -145,6 +150,14 @@ public class BankRequest {
 
 	public void setOffer(Integer offer) {
 		this.offer = offer;
+	}
+
+	public LocalDateTime getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
 	}
 
 	public Integer getAmount() {

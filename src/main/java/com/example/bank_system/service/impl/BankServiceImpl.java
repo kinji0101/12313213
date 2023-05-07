@@ -48,14 +48,13 @@ public class BankServiceImpl implements BankService {
 			return new BankResponse("存款金額錯誤");
 		}
 
-		Integer deposit = bank.getDeposit() + bank.getDepositRate();
-		deposit = amount + deposit;
+		Double deposit = amount + bank.getDeposit();
 		bank.setDeposit(deposit);
 		bankDao.save(bank);
 		return new BankResponse("存款完成");
 	}
 
-	// 存款
+	// 存款利息
 	@Transactional
 	@Override
 	public BankResponse getDepositRate(String card, String account, String password) {
@@ -74,10 +73,11 @@ public class BankServiceImpl implements BankService {
 			return new BankResponse("帳號或密碼輸入錯誤");
 		}
 
-		Integer depositRate = bank.getDepositRate();
+		Double depositRate = bank.getDepositRate();
 		return new BankResponse("目前利息金額為：" + depositRate);
 	}
 
+	// 計算存款利息
 	@Scheduled(cron = "0 0 15 * * ?")
 	public void calculateInterest() {
 
@@ -90,11 +90,28 @@ public class BankServiceImpl implements BankService {
 		List<Bank> banks = bankDao.findAll();
 
 		for (Bank bank : banks) {
-			
+			Double deposit = bank.getDeposit();
+			Double depositRate = bank.getDepositRate();
+			LocalDateTime createDate = bank.getCreateDate(); // 獲取帳戶申辦時間
 
+			if (createDate.plusMonths(6).isAfter(currentDateTime)) { // 判断是否為新申辦帳戶
+				if (deposit >= 100000) {
+					depositRate = deposit * 0.035 / 365 + bank.getDepositRate();
+				} else {
+					depositRate = deposit * 0.025 / 365 + bank.getDepositRate();
+				}
+			} else {
+				if (deposit >= 100000) {
+					depositRate = deposit * 0.03 / 365 + bank.getDepositRate();
+				} else {
+					depositRate = deposit * 0.02 / 365 + bank.getDepositRate();
+				}
+			}
+
+			bank.setDepositRate(depositRate);
 			bankDao.save(bank);
-
 		}
 
 	}
+
 }

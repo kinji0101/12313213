@@ -1,5 +1,7 @@
 package com.example.bank_system.vo.response;
 
+import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -19,15 +21,17 @@ public class BankResponse {
 
 	private String phoneNumber;
 
-	private Integer deposit;
+	private Double deposit;
 
-	private Integer depositRate;
+	private Double depositRate;
 
-	private Integer loan;
+	private Double loan;
 
-	private Integer loanRates;
+	private Double loanRate;
 
 	private Integer offer;
+
+	private LocalDateTime createDate;
 
 	private String message;
 
@@ -36,7 +40,8 @@ public class BankResponse {
 	}
 
 	public BankResponse(String card, String name, String address, String account, String password, String email,
-			String phoneNumber, Integer deposit, Integer depositRate, Integer loan, Integer loanRates, Integer offer) {
+			String phoneNumber, Double deposit, Double depositRate, Double loan, Double loanRate, Integer offer,
+			LocalDateTime createDate, String message) {
 		super();
 		this.card = card;
 		this.name = name;
@@ -48,12 +53,14 @@ public class BankResponse {
 		this.deposit = deposit;
 		this.depositRate = depositRate;
 		this.loan = loan;
-		this.loanRates = loanRates;
+		this.loanRate = loanRate;
 		this.offer = offer;
+		this.createDate = createDate;
+		this.message = message;
 	}
 
 	public BankResponse(String message) {
-	this.message = message;	
+		this.message = message;
 	}
 
 	public String getCard() {
@@ -112,36 +119,36 @@ public class BankResponse {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Integer getDeposit() {
+	public Double getDeposit() {
 		return deposit;
 	}
 
-	public void setDeposit(Integer deposit) {
+	public void setDeposit(Double deposit) {
 		this.deposit = deposit;
 	}
 
-	public Integer getDepositRate() {
+	public Double getDepositRate() {
 		return depositRate;
 	}
 
-	public void setDepositRate(Integer depositRate) {
+	public void setDepositRate(Double depositRate) {
 		this.depositRate = depositRate;
 	}
 
-	public Integer getLoan() {
+	public Double getLoan() {
 		return loan;
 	}
 
-	public void setLoan(Integer loan) {
+	public void setLoan(Double loan) {
 		this.loan = loan;
 	}
 
-	public Integer getLoanRates() {
-		return loanRates;
+	public Double getLoanRate() {
+		return loanRate;
 	}
 
-	public void setLoanRates(Integer loanRates) {
-		this.loanRates = loanRates;
+	public void setLoanRate(Double loanRate) {
+		this.loanRate = loanRate;
 	}
 
 	public Integer getOffer() {
@@ -150,6 +157,14 @@ public class BankResponse {
 
 	public void setOffer(Integer offer) {
 		this.offer = offer;
+	}
+
+	public LocalDateTime getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
 	}
 
 	public String getMessage() {

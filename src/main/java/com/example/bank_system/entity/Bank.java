@@ -1,5 +1,7 @@
 package com.example.bank_system.entity;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -43,30 +45,34 @@ public class Bank {
 
 	// 存款金額
 	@Column(name = "deposit")
-	private Integer deposit;
+	private Double deposit;
 
 	// 存款利息
 	@Column(name = "depositrate")
-	private Integer depositRate;
+	private Double depositRate;
 
 	// 貸款額度
 	@Column(name = "loan")
-	private Integer loan;
+	private Double loan;
 
 	// 貸款利息
 	@Column(name = "loanrate")
-	private Integer loanRate;
+	private Double loanRate;
 
 	// 轉帳優惠
 	@Column(name = "offer")
 	private Integer offer;
+	
+	//申辦時間
+	@Column(name = "createdate")
+	private LocalDateTime  createDate;
 
 	public Bank() {
 		super();
 	}
 
 	public Bank(String card, String name, String address, String account, String password, String email,
-			String phoneNumber, Integer deposit, Integer depositRate, Integer loan, Integer loanRate, Integer offer) {
+			String phoneNumber, Double deposit, Double depositRate, Double loan, Double loanRate, Integer offer, LocalDateTime  createDate) {
 		super();
 		this.card = card;
 		this.name = name;
@@ -80,6 +86,7 @@ public class Bank {
 		this.loan = loan;
 		this.loanRate = loanRate;
 		this.offer = offer;
+		this.createDate = createDate;
 	}
 
 	public String getCard() {
@@ -122,6 +129,14 @@ public class Bank {
 		this.password = password;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -130,35 +145,35 @@ public class Bank {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Integer getDeposit() {
+	public Double getDeposit() {
 		return deposit;
 	}
 
-	public void setDeposit(Integer deposit) {
+	public void setDeposit(Double deposit) {
 		this.deposit = deposit;
 	}
 
-	public Integer getDepositRate() {
+	public Double getDepositRate() {
 		return depositRate;
 	}
 
-	public void setDepositRate(Integer depositRate) {
+	public void setDepositRate(Double depositRate) {
 		this.depositRate = depositRate;
 	}
 
-	public Integer getLoan() {
+	public Double getLoan() {
 		return loan;
 	}
 
-	public void setLoan(Integer loan) {
+	public void setLoan(Double loan) {
 		this.loan = loan;
 	}
 
-	public Integer getLoanRate() {
+	public Double getLoanRate() {
 		return loanRate;
 	}
 
-	public void setLoanRates(Integer loanRate) {
+	public void setLoanRate(Double loanRate) {
 		this.loanRate = loanRate;
 	}
 
@@ -170,12 +185,12 @@ public class Bank {
 		this.offer = offer;
 	}
 
-	public String getEmail() {
-		return email;
+	public LocalDateTime getCreateDate() {
+		return createDate;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
 	}
-	
+
 }
