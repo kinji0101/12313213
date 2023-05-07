@@ -5,11 +5,12 @@ CREATE TABLE IF NOT EXISTS`bank_system` (
   `address` varchar(45) NOT NULL,
   `account` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
-  `phonenumbe` varchar(45) DEFAULT NULL,
-  `deposit` int DEFAULT '0',
-  `depositrate` int DEFAULT '0',
-  `loan` int DEFAULT '0',
-  `loanrate` int DEFAULT '0',
+  `phonenumber` varchar(45) DEFAULT NULL,
+  `deposit` decimal(15,4) DEFAULT '0.0000',
+  `depositrate` decimal(15,4) DEFAULT '0.0000',
+  `loan` decimal(15,4) DEFAULT '0.0000',
+  `loanrate` decimal(15,4) DEFAULT '0.0000',
   `offer` int DEFAULT '0',
+  `createdate` datetime DEFAULT NULL,
   PRIMARY KEY (`card`)
 );
