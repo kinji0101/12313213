@@ -10,5 +10,4 @@ public interface BankService {
 	//查詢利息並計算
 	public BankResponse getDepositRate(String card, String account, String password);
 
-	
 	}
