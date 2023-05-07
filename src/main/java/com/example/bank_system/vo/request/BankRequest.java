@@ -36,26 +36,6 @@ public class BankRequest {
 		super();
 	}
 
-	public BankRequest(String card, String name, String address, String account, String password, String email,
-			String phoneNumber, Double deposit, Double depositRate, Double loan, Double loanRate, Integer offer,
-			LocalDateTime createDate, Integer amount) {
-		super();
-		this.card = card;
-		this.name = name;
-		this.address = address;
-		this.account = account;
-		this.password = password;
-		this.email = email;
-		this.phoneNumber = phoneNumber;
-		this.deposit = deposit;
-		this.depositRate = depositRate;
-		this.loan = loan;
-		this.loanRate = loanRate;
-		this.offer = offer;
-		this.createDate = createDate;
-		this.amount = amount;
-	}
-
 	public String getCard() {
 		return card;
 	}

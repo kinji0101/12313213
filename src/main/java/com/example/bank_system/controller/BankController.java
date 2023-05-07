@@ -24,4 +24,10 @@ public class BankController {
 				bankRequest.getAmount());
 	}
 
+	// 查詢存款利息金額
+	@PostMapping("/get_DepositRate")
+	public BankResponse getDepositRate(@RequestBody BankRequest bankRequest) {
+		return bankService.getDepositRate(bankRequest.getCard(), bankRequest.getAccount(), bankRequest.getPassword());
+	}
+	
 }

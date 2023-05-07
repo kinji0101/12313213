@@ -7,7 +7,7 @@ public interface BankService {
 	//存款
 	public BankResponse deposit(String card, String account, String password, Integer amount);
 		
-	//查詢利息並計算
+	//查詢利息
 	public BankResponse getDepositRate(String card, String account, String password);
 
 	}

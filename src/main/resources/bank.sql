@@ -13,4 +13,4 @@ CREATE TABLE IF NOT EXISTS`bank_system` (
   `offer` int DEFAULT '0',
   `createdate` datetime DEFAULT NULL,
   PRIMARY KEY (`card`)
-);
+) ;

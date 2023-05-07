@@ -54,7 +54,7 @@ public class BankServiceImpl implements BankService {
 		return new BankResponse("存款完成");
 	}
 
-	// 存款利息
+	// 查詢存款利息金額
 	@Transactional
 	@Override
 	public BankResponse getDepositRate(String card, String account, String password) {
@@ -77,7 +77,7 @@ public class BankServiceImpl implements BankService {
 		return new BankResponse("目前利息金額為：" + depositRate);
 	}
 
-	// 計算存款利息
+	// 計算存款利息金額
 	@Scheduled(cron = "0 0 15 * * ?")
 	public void calculateInterest() {
 
