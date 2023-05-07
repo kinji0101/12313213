@@ -1,29 +1,59 @@
 package com.example.bank_system.vo.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BankResponse {
-	
+
 	private String card;
-	
+
 	private String name;
-	
+
 	private String address;
-	
+
+	private String account;
+
+	private String password;
+
 	private String email;
-	
-	private Integer phoneNumber;
-	
+
+	private String phoneNumber;
+
 	private Integer deposit;
-	
+
 	private Integer depositRate;
-	
-	private Integer  loan;
-	
+
+	private Integer loan;
+
 	private Integer loanRates;
-	
+
 	private Integer offer;
+
+	private String message;
 
 	public BankResponse() {
 		super();
+	}
+
+	public BankResponse(String card, String name, String address, String account, String password, String email,
+			String phoneNumber, Integer deposit, Integer depositRate, Integer loan, Integer loanRates, Integer offer) {
+		super();
+		this.card = card;
+		this.name = name;
+		this.address = address;
+		this.account = account;
+		this.password = password;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.deposit = deposit;
+		this.depositRate = depositRate;
+		this.loan = loan;
+		this.loanRates = loanRates;
+		this.offer = offer;
+	}
+
+	public BankResponse(String message) {
+	this.message = message;	
 	}
 
 	public String getCard() {
@@ -50,6 +80,22 @@ public class BankResponse {
 		this.address = address;
 	}
 
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -58,11 +104,11 @@ public class BankResponse {
 		this.email = email;
 	}
 
-	public Integer getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(Integer phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
@@ -106,6 +152,12 @@ public class BankResponse {
 		this.offer = offer;
 	}
 
-	
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
 }

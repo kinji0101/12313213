@@ -5,43 +5,81 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 @Entity
-@Table(name = "bank")
+@Table(name = "bank_system")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Bank {
-	
+
+	// 卡號
 	@Id
 	@Column(name = "card")
 	private String card;
-	
+
+	// 姓名
 	@Column(name = "name")
 	private String name;
-	
+
+	// 戶籍地址
 	@Column(name = "address")
 	private String address;
-	
+
+	// 帳號
+	@Column(name = "account")
+	private String account;
+
+	// 密碼
+	@Column(name = "password")
+	private String password;
+
+	// 信箱
 	@Column(name = "email")
 	private String email;
-	
-	@Column(name = "phoneNumber")
-	private Integer phoneNumber;
-	
+
+	// 手機號碼
+	@Column(name = "phonenumber")
+	private String phoneNumber;
+
+	// 存款金額
 	@Column(name = "deposit")
 	private Integer deposit;
-	
-	@Column(name = "depositRate")
+
+	// 存款利息
+	@Column(name = "depositrate")
 	private Integer depositRate;
-	
+
+	// 貸款額度
 	@Column(name = "loan")
-	private Integer  loan;
-	
-	@Column(name = "loanRates")
-	private Integer loanRates;
-	
+	private Integer loan;
+
+	// 貸款利息
+	@Column(name = "loanrate")
+	private Integer loanRate;
+
+	// 轉帳優惠
 	@Column(name = "offer")
 	private Integer offer;
 
 	public Bank() {
 		super();
+	}
+
+	public Bank(String card, String name, String address, String account, String password, String email,
+			String phoneNumber, Integer deposit, Integer depositRate, Integer loan, Integer loanRate, Integer offer) {
+		super();
+		this.card = card;
+		this.name = name;
+		this.address = address;
+		this.account = account;
+		this.password = password;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.deposit = deposit;
+		this.depositRate = depositRate;
+		this.loan = loan;
+		this.loanRate = loanRate;
+		this.offer = offer;
 	}
 
 	public String getCard() {
@@ -68,11 +106,27 @@ public class Bank {
 		this.address = address;
 	}
 
-	public Integer getPhoneNumber() {
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(Integer phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
@@ -100,12 +154,12 @@ public class Bank {
 		this.loan = loan;
 	}
 
-	public Integer getLoanRates() {
-		return loanRates;
+	public Integer getLoanRate() {
+		return loanRate;
 	}
 
-	public void setLoanRates(Integer loanRates) {
-		this.loanRates = loanRates;
+	public void setLoanRates(Integer loanRate) {
+		this.loanRate = loanRate;
 	}
 
 	public Integer getOffer() {
@@ -123,6 +177,5 @@ public class Bank {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
 	
 }
