@@ -1,6 +1,7 @@
 package com.example.bank_system.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,10 +12,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.example.bank_system.entity.Bank;
 import com.example.bank_system.repository.BankDao;
 import com.example.bank_system.service.ifs.BankService;
+import com.example.bank_system.vo.request.BankRequest;
 import com.example.bank_system.vo.response.BankResponse;
 
 @SpringBootApplication
@@ -24,6 +27,92 @@ public class BankServiceImpl implements BankService {
 
 	@Autowired
 	private BankDao bankDao;
+	
+	//用戶註冊功能
+	@Override
+	public BankResponse addClient(BankRequest bankRequest) {
+		List<Bank> errorBank = new ArrayList<>();
+		List<Bank> bankList = bankRequest.getBankList();
+		
+		for(Bank item : bankList ) {
+		if(!StringUtils.hasText(item.getCard()) || !StringUtils.hasText(item.getName())
+		|| !StringUtils.hasText(item.getAddress()) || !StringUtils.hasText(item.getEmail()) || item.getPhoneNumber() == null
+		|| item.getDeposit() == null || item.getDepositRate() == null || item.getLoan() == null || item.getLoanRate() == null 
+		|| item.getOffer() == null)  {
+			return new BankResponse("add Client error");
+		}
+			if(bankDao.existsById(item.getCard())) {
+				errorBank.add(item);
+			}
+		}
+		if(!errorBank.isEmpty()) {
+			return new BankResponse("此用戶已存在");
+		}
+		bankDao.saveAll(bankList);
+		return new BankResponse(bankList,"用戶註冊成功");
+	}
+	
+	
+	//查詢用戶資料
+	@Override
+	public List<Bank> findByCard(String card) {
+		
+		return bankDao.findByCard(card);
+	}
+	
+	//修改用戶資料
+	@Override
+	public BankResponse updateClient(BankRequest bankRequest) {
+	    List<Bank> errorBank = new ArrayList<>();
+	    List<Bank> updatedBankList = new ArrayList<>();
+	    List<Bank> bankList = bankRequest.getBankList();
+
+	    for (Bank item : bankList) {
+	        if (!StringUtils.hasText(item.getCard())) {
+	            return new BankResponse("請輸入要更新的用戶卡號");
+	        }
+	        Bank existingBank = bankDao.findById(item.getCard()).orElse(null);
+	        if (existingBank == null) {
+	            errorBank.add(item);
+	        } else {
+	            if (StringUtils.hasText(item.getName())) {
+	                existingBank.setName(item.getName());
+	            }
+	            if (StringUtils.hasText(item.getAddress())) {
+	                existingBank.setAddress(item.getAddress());
+	            }
+	            if (StringUtils.hasText(item.getEmail())) {
+	                existingBank.setEmail(item.getEmail());
+	            }
+	            if (item.getPhoneNumber() != null) {
+	                existingBank.setPhoneNumber(item.getPhoneNumber());
+	            }
+	            if (item.getDeposit() != null) {
+	                existingBank.setDeposit(item.getDeposit());
+	            }
+	            if (item.getDepositRate() != null) {
+	                existingBank.setDepositRate(item.getDepositRate());
+	            }
+	            if (item.getLoan() != null) {
+	                existingBank.setLoan(item.getLoan());
+	            }
+	            if (item.getLoanRate() != null) {
+	                existingBank.setLoanRate(item.getLoanRate());
+	            }
+	            if (item.getOffer() != null) {
+	                existingBank.setOffer(item.getOffer());
+	            }
+	            updatedBankList.add(existingBank);
+	        }
+	    }
+	    if (!errorBank.isEmpty()) {
+	        return new BankResponse("此用戶不存在");
+	    }
+	    bankDao.saveAll(updatedBankList);
+	    return new BankResponse(updatedBankList, "用戶資料更新成功");
+	}
+
+	
 
 	// 存款
 	@Transactional
@@ -97,4 +186,9 @@ public class BankServiceImpl implements BankService {
 		}
 
 	}
+
+
+
+
+
 }

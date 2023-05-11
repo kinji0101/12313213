@@ -158,7 +158,7 @@ public class Bank {
 		return loanRate;
 	}
 
-	public void setLoanRates(Integer loanRate) {
+	public void setLoanRate(Integer loanRate) {
 		this.loanRate = loanRate;
 	}
 

@@ -1,84 +1,50 @@
 package com.example.bank_system.vo.request;
 
-import java.util.List;
-
-import com.example.bank_system.entity.Bank;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class BankRequest {
+public class UpdateRequest {
 	
-	@JsonProperty("bank")
-	private Bank bank;
-	
-	@JsonProperty("bank_list")
-	private List<Bank> bankList;
-	
-
+	@JsonProperty("card")
 	public String card;
 
+	@JsonProperty("name")
 	public String name;
 
+	@JsonProperty("address")
 	public String address;
 
+	@JsonProperty("account")
 	public String account;
 
+	@JsonProperty("password")
 	public String password;
 
+	@JsonProperty("email")
 	public String email;
 
+	@JsonProperty("phoneNumber")
 	public String phoneNumber;
-
+	
+	@JsonProperty("deposit")
 	public Integer deposit;
 
+	@JsonProperty("depositRate")
 	public Integer depositRate;
-
+	
+	@JsonProperty("loan")
 	public Integer loan;
 
+	@JsonProperty("loanRate")
 	public Integer loanRate;
-
+	
+	@JsonProperty("offer")
 	public Integer offer;
 
+	@JsonProperty("amount")
 	public Integer amount;
 
-	public BankRequest() {
+	public UpdateRequest() {
 		super();
-	}
-
-	public BankRequest(String card, String name, String address, String account, String password, String email,
-			String phoneNumber, Integer deposit, Integer depositRate, Integer loan, Integer loanRate, Integer offer,
-			Integer amount) {
-		super();
-		this.card = card;
-		this.name = name;
-		this.address = address;
-		this.account = account;
-		this.password = password;
-		this.email = email;
-		this.phoneNumber = phoneNumber;
-		this.deposit = deposit;
-		this.depositRate = depositRate;
-		this.loan = loan;
-		this.loanRate = loanRate;
-		this.offer = offer;
-		this.amount = amount;
-	}
-	
-	
-
-	public Bank getBank() {
-		return bank;
-	}
-
-	public void setBank(Bank bank) {
-		this.bank = bank;
-	}
-
-	public List<Bank> getBankList() {
-		return bankList;
-	}
-
-	public void setBankList(List<Bank> bankList) {
-		this.bankList = bankList;
 	}
 
 	public String getCard() {
@@ -161,7 +127,7 @@ public class BankRequest {
 		this.loan = loan;
 	}
 
-	public Integer getLoanRates() {
+	public Integer getLoanRate() {
 		return loanRate;
 	}
 
@@ -184,5 +150,7 @@ public class BankRequest {
 	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
+	
+	
 
 }
