@@ -1,91 +1,51 @@
 package com.example.bank_system.vo.request;
 
-
-import java.time.LocalDateTime;
-
-import java.util.List;
-
-import com.example.bank_system.entity.Bank;
 import com.fasterxml.jackson.annotation.JsonProperty;
-public class BankRequest {
-	
-	@JsonProperty("bank")
-	private Bank bank;
-	
-	@JsonProperty("bank_list")
-	private List<Bank> bankList;
-	
 
+public class UpdateRequest {
+	
+	@JsonProperty("card")
 	public String card;
 
+	@JsonProperty("name")
 	public String name;
 
+	@JsonProperty("address")
 	public String address;
 
+	@JsonProperty("account")
 	public String account;
 
+	@JsonProperty("password")
 	public String password;
 
+	@JsonProperty("email")
 	public String email;
 
+	@JsonProperty("phoneNumber")
 	public String phoneNumber;
-
+	
+	@JsonProperty("deposit")
 	public Integer deposit;
 
-	public Double depositRate;
-
+	@JsonProperty("depositRate")
+	public Integer depositRate;
+	
+	@JsonProperty("loan")
 	public Integer loan;
 
-	public Double loanRate;
-
+	@JsonProperty("loanRate")
+	public Integer loanRate;
+	
+	@JsonProperty("offer")
 	public Integer offer;
 
-	public LocalDateTime createDate;
-
+	@JsonProperty("amount")
 	public Integer amount;
 
-	public BankRequest() {
+	public UpdateRequest() {
 		super();
 	}
-
-
-	public BankRequest(String card, String name, String address, String account, String password, String email,
-			String phoneNumber, Integer deposit, Double depositRate, Integer loan, Double loanRate, Integer offer,
-			Integer amount) {
-		super();
-		this.card = card;
-		this.name = name;
-		this.address = address;
-		this.account = account;
-		this.password = password;
-		this.email = email;
-		this.phoneNumber = phoneNumber;
-		this.deposit = deposit;
-		this.depositRate = depositRate;
-		this.loan = loan;
-		this.loanRate = loanRate;
-		this.offer = offer;
-		this.amount = amount;
-	}
-	
-	
-
-	public Bank getBank() {
-		return bank;
-	}
-
-	public void setBank(Bank bank) {
-		this.bank = bank;
-	}
-
-	public List<Bank> getBankList() {
-		return bankList;
-	}
-
-	public void setBankList(List<Bank> bankList) {
-		this.bankList = bankList;
-	}
-
 
 	public String getCard() {
 		return card;
@@ -151,11 +111,11 @@ public class BankRequest {
 		this.deposit = deposit;
 	}
 
-	public Double getDepositRate() {
+	public Integer getDepositRate() {
 		return depositRate;
 	}
 
-	public void setDepositRate(Double depositRate) {
+	public void setDepositRate(Integer depositRate) {
 		this.depositRate = depositRate;
 	}
 
@@ -167,17 +127,11 @@ public class BankRequest {
 		this.loan = loan;
 	}
 
-
-	
-	public Double getLoanRates() {
-
+	public Integer getLoanRate() {
 		return loanRate;
 	}
 
-
-
-	public void setLoanRate(Double loanRate) {
-
+	public void setLoanRate(Integer loanRate) {
 		this.loanRate = loanRate;
 	}
 
@@ -189,14 +143,6 @@ public class BankRequest {
 		this.offer = offer;
 	}
 
-	public LocalDateTime getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(LocalDateTime createDate) {
-		this.createDate = createDate;
-	}
-
 	public Integer getAmount() {
 		return amount;
 	}
@@ -204,5 +150,7 @@ public class BankRequest {
 	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
+	
+	
 
 }

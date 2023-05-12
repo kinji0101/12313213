@@ -1,11 +1,24 @@
 package com.example.bank_system.vo.response;
 
+
 import java.time.LocalDateTime;
 
+
+import java.util.List;
+
+import com.example.bank_system.entity.Bank;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BankResponse {
+	
+	@JsonProperty("bank")
+	private Bank bank;
+	
+	@JsonProperty("bank_list")
+	private List<Bank> bankList;
 
 	private String card;
 
@@ -61,6 +74,29 @@ public class BankResponse {
 
 	public BankResponse(String message) {
 		this.message = message;
+	}
+	
+
+	public BankResponse(List<Bank> bankList, String message) {
+		super();
+		this.bankList = bankList;
+		this.message = message;
+	}
+
+	public Bank getBank() {
+		return bank;
+	}
+
+	public void setBank(Bank bank) {
+		this.bank = bank;
+	}
+
+	public List<Bank> getBankList() {
+		return bankList;
+	}
+
+	public void setBankList(List<Bank> bankList) {
+		this.bankList = bankList;
 	}
 
 	public String getCard() {

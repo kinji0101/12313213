@@ -173,7 +173,10 @@ public class Bank {
 		return loanRate;
 	}
 
+
+
 	public void setLoanRate(Double loanRate) {
+
 		this.loanRate = loanRate;
 	}
 
