@@ -7,35 +7,38 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "bank")
-public class bank {
+public class Bank {
 	
 	@Id
 	@Column(name = "card")
-	private String card;
+	private String card; //卡號
+	
+	@Column(name = "password")
+	private String password; //密碼
 	
 	@Column(name = "name")
-	private String name;
+	private String name; //姓名
 	
 	@Column(name = "address")
-	private String address;
+	private String address; //戶籍
 	
-	@Column(name = "phoneNumber")
-	private Integer phoneNumber;
+	@Column(name = "phone_number")
+	private Integer phoneNumber; //電話號碼
 	
 	@Column(name = "deposit")
-	private Integer deposit;
+	private Integer deposit; // 存款金額
 	
-	@Column(name = "depositRate")
-	private Integer depositRate;
+	@Column(name = "deposit_rate")
+	private Integer depositRate; //存款利率
 	
 	@Column(name = "loan")
-	private Integer  loan;
+	private Integer  loan; //貸款額度
 	
-	@Column(name = "loanRates")
-	private Integer loanRates;
+	@Column(name = "loan_rate")
+	private Integer loanRates; //貸款利率
 	
 	@Column(name = "offer")
-	private Integer offer;
+	private Integer offer; //轉帳優惠
 
 	public String getCard() {
 		return card;
@@ -108,6 +111,20 @@ public class bank {
 	public void setOffer(Integer offer) {
 		this.offer = offer;
 	}
-	//123121321
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
+
+
+	
+	
+	
 	
 }
