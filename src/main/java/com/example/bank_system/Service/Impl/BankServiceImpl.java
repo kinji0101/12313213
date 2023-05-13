@@ -29,7 +29,7 @@ public class BankServiceImpl implements BankService{
 	
 	@Transactional
 	@Override
-	public BankResponse getdepositByCardAndPassword(BankRequest request) {
+	public BankResponse login(BankRequest request) {
 		String reqCard = request.getCard();;
 		String reqPassword = request.getPassword();;
 		if (!StringUtils.hasText(reqCard)||!StringUtils.hasText(reqPassword)) {
@@ -43,8 +43,33 @@ public class BankServiceImpl implements BankService{
 		if ( pwd == null) {
 			return new BankResponse("密碼不存在");
 		}
-		return new BankResponse( "登入成功");
+		return new BankResponse("登入成功");
 	}
+	
+	@Transactional
+	@Override
+	public BankResponse getDepositByCardAndPassword (BankRequest request) {
+		String reqCard = request.getCard();;
+		String reqPassword = request.getPassword();;
+		if (!StringUtils.hasText(reqCard)||!StringUtils.hasText(reqPassword)) {
+			return new BankResponse("請確實輸入卡號和密碼");
+		}
+		Bank card = bankDao.findByCard(reqCard);
+		if ( card == null) {
+			return new BankResponse("卡號不存在");
+		}
+		Bank pwd = bankDao.findByPassword(reqPassword);
+		if ( pwd == null) {
+			return new BankResponse("密碼不存在");
+		}
+		 if (request.getCard().equals(card.getCard()) && request.getPassword().equals(pwd.getPassword())) {
+		    }
+		 String message = "帳戶餘額：" + card.getDeposit();
+		 return new BankResponse(request.getCard(),card.getName(), message);
+
+		
+	}
+
 
 
 

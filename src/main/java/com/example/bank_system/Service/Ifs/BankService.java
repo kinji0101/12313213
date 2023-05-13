@@ -5,6 +5,8 @@ import com.example.bank_system.Vo.BankResponse;
 
 public interface BankService {
 
-	BankResponse getdepositByCardAndPassword(BankRequest request);
+	BankResponse login(BankRequest request);
+
+	BankResponse getDepositByCardAndPassword(BankRequest request);
 
 }

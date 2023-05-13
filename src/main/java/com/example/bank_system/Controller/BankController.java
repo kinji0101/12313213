@@ -18,9 +18,14 @@ public class BankController {
 	@Autowired
 	private BankService service;
 	
-	@PostMapping("/get_deposit_By_Card")
-	private BankResponse getdepositByCardAndPassword(@RequestBody BankRequest request) {
-		return service.getdepositByCardAndPassword(request);
+	@PostMapping("/login")
+	private BankResponse login(@RequestBody BankRequest request) {
+		return service.login(request);
+	}
+	
+	@PostMapping("/get_Deposit_By_Card_And_Password")
+	private BankResponse getDepositByCardAndPassword(@RequestBody BankRequest request) {
+		return service.getDepositByCardAndPassword(request);
 	}
 
 }

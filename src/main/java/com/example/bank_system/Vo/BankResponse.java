@@ -151,6 +151,16 @@ public class BankResponse {
 		super();
 		this.bank = bank;
 	}
+
+	public BankResponse(String card, String name, String messege) {
+		super();
+		this.card = card;
+		this.name = name;
+		this.messege = messege;
+	}
+
+	
+	
 	
 	
 
