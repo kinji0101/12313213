@@ -21,6 +21,8 @@ public class BankResponse {
 	
 	private String address;
 	
+	private Integer withdraw;
+	
 	private Integer phoneNumber;
 	
 	private Integer deposit;
@@ -32,6 +34,7 @@ public class BankResponse {
 	private Integer loanRates;
 	
 	private Integer offer;
+	
 	
 	private String messege;
 
@@ -118,8 +121,31 @@ public class BankResponse {
 	public void setMessege(String messege) {
 		this.messege = messege;
 	}
-	
-	
+
+	public Bank getBank() {
+		return bank;
+	}
+
+	public void setBank(Bank bank) {
+		this.bank = bank;
+	}
+
+	public List<Bank> getBankList() {
+		return bankList;
+	}
+
+	public void setBankList(List<Bank> bankList) {
+		this.bankList = bankList;
+	}
+
+
+	public Integer getWithdraw() {
+		return withdraw;
+	}
+
+	public void setWithdraw(Integer withdraw) {
+		this.withdraw = withdraw;
+	}
 
 	public BankResponse(String card, String name, String address, Integer phoneNumber, Integer deposit,
 			Integer depositRate, Integer loan, Integer loanRates, Integer offer, String messege) {

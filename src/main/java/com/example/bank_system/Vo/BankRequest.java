@@ -21,6 +21,8 @@ public class BankRequest {
 	
 	private String address;
 	
+	private Integer withdraw;
+	
 	private Integer phoneNumber;
 	
 	private Integer deposit;
@@ -132,7 +134,18 @@ public class BankRequest {
 	public void setBankList(List<Bank> bankList) {
 		this.bankList = bankList;
 	}
+
+	public Integer getWithdraw() {
+		return withdraw;
+	}
+
+	public void setWithdraw(Integer withdraw) {
+		this.withdraw = withdraw;
+	}
 	
+	
+
+
 	
 	
 	

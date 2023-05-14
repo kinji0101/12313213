@@ -27,5 +27,10 @@ public class BankController {
 	private BankResponse getDepositByCardAndPassword(@RequestBody BankRequest request) {
 		return service.getDepositByCardAndPassword(request);
 	}
+	
+	@PostMapping("/withdraw_By_Card_And_Password")
+	private BankResponse withdrawByCardAndPassword(@RequestBody BankRequest request) {
+		return service.withdrawByCardAndPassword(request);
+	}
 
 }

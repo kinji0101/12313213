@@ -1,5 +1,6 @@
 package com.example.bank_system.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +13,7 @@ public interface BankDao extends JpaRepository<Bank, String>{
 
 	Bank findByCard(String reqCard);
 
-	Bank findByPassword(String reqPassword);
+	List<Bank> findByPassword(String reqPassword);
 
 
 
