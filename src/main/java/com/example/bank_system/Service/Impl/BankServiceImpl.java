@@ -142,7 +142,7 @@ public class BankServiceImpl implements BankService {
 				public void run() {
 					List<Bank> banks = bankDao.findAll(); // 取得所有銀行帳戶
 					for (Bank bank : banks) {
-						if (bank.getDeposit() >= 50000 && bank.getDeposit() < 100000) { // 如果帳戶餘額超過50000元
+						if (bank.getDeposit() >= 50000 && bank.getDeposit() < 100000) { // 如果帳戶餘額超過50000元且小於100000元
 							int offerCount = bank.getOffer(); // 取得優惠次數
 							if (offerCount < 10) { // 判斷優惠次數是否已達上限
 								bank.setOffer(offerCount + 1); // 增加優惠次數
