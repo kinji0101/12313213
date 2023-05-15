@@ -35,6 +35,8 @@ public class BankRequest {
 	
 	private Integer offer;
 	
+	private Integer transferMoney;
+	
 	
 	public BankRequest() {
 	}
@@ -141,6 +143,14 @@ public class BankRequest {
 
 	public void setWithdraw(Integer withdraw) {
 		this.withdraw = withdraw;
+	}
+
+	public Integer getTransferMoney() {
+		return transferMoney;
+	}
+
+	public void setTransferMoney(Integer transferMoney) {
+		this.transferMoney = transferMoney;
 	}
 	
 	

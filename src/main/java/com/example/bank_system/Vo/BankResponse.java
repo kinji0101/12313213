@@ -35,6 +35,7 @@ public class BankResponse {
 	
 	private Integer offer;
 	
+	private Integer transferMoney;
 	
 	private String messege;
 
@@ -146,6 +147,15 @@ public class BankResponse {
 	public void setWithdraw(Integer withdraw) {
 		this.withdraw = withdraw;
 	}
+	
+
+	public Integer getTransferMoney() {
+		return transferMoney;
+	}
+
+	public void setTransferMoney(Integer transferMoney) {
+		this.transferMoney = transferMoney;
+	}
 
 	public BankResponse(String card, String name, String address, Integer phoneNumber, Integer deposit,
 			Integer depositRate, Integer loan, Integer loanRates, Integer offer, String messege) {
@@ -184,6 +194,12 @@ public class BankResponse {
 		this.name = name;
 		this.messege = messege;
 	}
+
+	public BankResponse(String card2, String name2, String message, String string) {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 
 	
 	

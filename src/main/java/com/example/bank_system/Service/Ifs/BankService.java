@@ -12,4 +12,7 @@ public interface BankService {
 
 	BankResponse withdrawByCardAndPassword(BankRequest request);
 
+	BankResponse transferMoney(BankRequest request);
+
+
 }

@@ -15,6 +15,8 @@ public interface BankDao extends JpaRepository<Bank, String>{
 
 	List<Bank> findByPassword(String reqPassword);
 
+	Bank findByName(String reqName);
+
 
 
 
