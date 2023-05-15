@@ -1,24 +1,23 @@
 package com.example.bank_system.vo.response;
 
-
 import java.time.LocalDateTime;
-
-
 import java.util.List;
 
 import com.example.bank_system.entity.Bank;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BankResponse {
-	
+
 	@JsonProperty("bank")
 	private Bank bank;
-	
+
 	@JsonProperty("bank_list")
 	private List<Bank> bankList;
+
+	@JsonProperty("loans")
+	private List<String> Loans;
 
 	private String card;
 
@@ -46,6 +45,8 @@ public class BankResponse {
 
 	private LocalDateTime createDate;
 
+	private Integer installments;
+
 	private String message;
 
 	public BankResponse() {
@@ -54,7 +55,7 @@ public class BankResponse {
 
 	public BankResponse(String card, String name, String address, String account, String password, String email,
 			String phoneNumber, Double deposit, Double depositRate, Double loan, Double loanRate, Integer offer,
-			LocalDateTime createDate, String message) {
+			LocalDateTime createDate, Integer installments, String message) {
 		super();
 		this.card = card;
 		this.name = name;
@@ -69,18 +70,22 @@ public class BankResponse {
 		this.loanRate = loanRate;
 		this.offer = offer;
 		this.createDate = createDate;
+		this.installments = installments;
 		this.message = message;
 	}
 
 	public BankResponse(String message) {
 		this.message = message;
 	}
-	
 
 	public BankResponse(List<Bank> bankList, String message) {
 		super();
 		this.bankList = bankList;
 		this.message = message;
+	}
+
+	public BankResponse(List<String> loans) {
+		this.Loans = loans;
 	}
 
 	public Bank getBank() {
@@ -97,6 +102,14 @@ public class BankResponse {
 
 	public void setBankList(List<Bank> bankList) {
 		this.bankList = bankList;
+	}
+
+	public List<String> getLoans() {
+		return Loans;
+	}
+
+	public void setLoans(List<String> loans) {
+		Loans = loans;
 	}
 
 	public String getCard() {
@@ -201,6 +214,14 @@ public class BankResponse {
 
 	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
+	}
+
+	public Integer getInstallments() {
+		return installments;
+	}
+
+	public void setInstallments(Integer installments) {
+		this.installments = installments;
 	}
 
 	public String getMessage() {

@@ -19,20 +19,20 @@ public class BankController {
 
 	@Autowired
 	private BankService bankService;
-	
-	//用戶註冊功能
+
+	// 用戶註冊功能
 	@PostMapping("add_client")
 	public BankResponse addDiner(@RequestBody BankRequest bankRequest) {
 		return bankService.addClient(bankRequest);
 	}
-	
-	//查詢用戶資料
+
+	// 查詢用戶資料
 	@PostMapping("find_by_card")
-	public List<Bank> findByCard(@RequestBody BankRequest bankRequest) {		
+	public List<Bank> findByCard(@RequestBody BankRequest bankRequest) {
 		return bankService.findByCard(bankRequest.getCard());
 	}
-	
-	//修改用戶資料
+
+	// 修改用戶資料
 	@PostMapping("update_client")
 	public BankResponse updateClient(@RequestBody BankRequest bankRequest) {
 		return bankService.updateClient(bankRequest);
@@ -50,5 +50,5 @@ public class BankController {
 	public BankResponse getDepositRate(@RequestBody BankRequest bankRequest) {
 		return bankService.getDepositRate(bankRequest.getCard(), bankRequest.getAccount(), bankRequest.getPassword());
 	}
-	
+
 }

@@ -7,20 +7,20 @@ import com.example.bank_system.vo.request.BankRequest;
 import com.example.bank_system.vo.response.BankResponse;
 
 public interface BankService {
-	
-	//用戶註冊功能
+
+	// 用戶註冊功能
 	public BankResponse addClient(BankRequest bankRequest);
-	
-	//查詢用戶資料
+
+	// 查詢用戶資料
 	public List<Bank> findByCard(String card);
-	
-	//修改用戶資料
+
+	// 修改用戶資料
 	public BankResponse updateClient(BankRequest bankRequest);
 
-	//存款
+	// 存款
 	public BankResponse deposit(String card, String account, String password, Integer amount);
-		
-	//查詢利息
+
+	// 查詢存款利息
 	public BankResponse getDepositRate(String card, String account, String password);
 
-	}
+}
