@@ -166,46 +166,6 @@ public class BankServiceImpl implements BankService {
 		}
 	}
 
-//	@Transactional
-//	@Override
-//	public BankResponse transferMoney(BankRequest request) {
-//		String reqCard = request.getCard();
-//		String reqPassword = request.getPassword();
-//		String reqName = request.getName();
-//		int reqTransMoney = request.getTransferMoney();
-//		if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword)) {
-//			return new BankResponse("請確實輸入卡號和密碼");
-//		}
-//		Bank transferOut = bankDao.findByCard(reqCard);
-//		if (transferOut == null) {
-//			return new BankResponse("卡號不存在");
-//		}
-//		Bank transferIn = bankDao.findByName(reqName);
-//		if (transferIn == null) {
-//			return new BankResponse("轉入帳戶不存在");
-//		}
-//		if (transferIn.getCard().equals(transferOut.getCard())) {
-//			return new BankResponse("無法轉帳給自己");
-//		}
-//		if (reqTransMoney <= 0) {
-//			return new BankResponse("轉帳失敗");
-//		}
-//		if (transferOut.getDeposit() < reqTransMoney) {
-//			return new BankResponse("餘額不足");
-//		}
-//		for(int i = 0; i <= request.getOffer(); i++) {
-//			if(i <= request.getOffer()) {
-//				transferOut.setDeposit(transferOut.getDeposit() - reqTransMoney );							
-//			}else {
-//				transferOut.setDeposit(transferOut.getDeposit() -10 - reqTransMoney);		
-//			}
-//		}
-//		transferIn.setDeposit(transferIn.getDeposit() + reqTransMoney);
-//		bankDao.save(transferOut);
-//		bankDao.save(transferIn);
-//		String message = "帳戶餘額：" + transferOut.getDeposit();
-//		return new BankResponse(reqCard, transferOut.getName(), message, "轉帳成功");
-//	}
 
 	@Transactional
 	@Override
