@@ -214,8 +214,6 @@ public class BankServiceImpl implements BankService {
 		String reqPassword = request.getPassword();
 		String reqName = request.getName();
 		int reqTransMoney = request.getTransferMoney();
-		int reqOffer = request.getOffer();
-
 		if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword)) {
 			return new BankResponse("請確實輸入卡號和密碼");
 		}
