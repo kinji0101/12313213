@@ -60,10 +60,9 @@ public class LoanServiceImpl implements LoanService {
 		if (installments < 3 || installments > 12) {
 			return new BankResponse("分期期數錯誤");
 		}
-		
+
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		Double loanRate = 0.0;
-
 
 		// get存款判斷信用分數
 		Double depoist = bank.getDeposit() + bank.getDepositRate();
@@ -92,7 +91,6 @@ public class LoanServiceImpl implements LoanService {
 		loans.setInstallments(installments);
 		loans.setBank(bank);
 		loans.setLoanTime(currentDateTime);
-		
 
 		// 將貸款保存到資料庫
 		loanDao.save(loans);
@@ -132,7 +130,7 @@ public class LoanServiceImpl implements LoanService {
 
 	// 結帳帳單
 	// @Scheduled(cron = "0 0 0 12 * ?") // 每月1日执行
-	// @Scheduled(cron = "0 * * * * ?")
+	@Scheduled(cron = "0 * * * * ?")
 	public void statement() {
 
 		System.out.println("定時任務：開始結帳");
@@ -165,26 +163,18 @@ public class LoanServiceImpl implements LoanService {
 	// 還款
 	@Transactional
 	@Override
-	public BankResponse repayment(String card, String account, String password, Integer id, Integer amount) {
+	public BankResponse repayment(Integer id, Integer amount) {
 
-		if (card.isBlank() || account.isBlank() || password.isBlank() || id == null || amount == null) {
+		if (id == null || amount == null) {
 			return new BankResponse("請檢查輸入欄位");
 		}
 
-		Optional<Bank> bankOp = bankDao.findById(card);
-		if (!bankOp.isPresent()) {
-			return new BankResponse("卡號輸入錯誤");
-		}
-
-		Long loanId = Long.valueOf(id);
 		Optional<Loan> loanOp = loanDao.findById(id);
-
-		Bank bank = bankOp.get();
-		Loan loan = loanOp.get();
-
-		if (!bank.getAccount().equals(account) || !bank.getPassword().equals(password)) {
-			return new BankResponse("帳號或密碼輸入錯誤");
+		if (!loanOp.isPresent()) {
+			return new BankResponse("繳款代碼輸入錯誤");
 		}
+
+		Loan loan = loanOp.get();
 
 		if (amount <= 0) {
 			return new BankResponse("還款金額錯誤");
@@ -193,16 +183,17 @@ public class LoanServiceImpl implements LoanService {
 		Double repaymentRate = loan.getLoanRate() - amount;
 		Double repayment = loan.getLoan();
 
+		// 先扣完利息再扣本金
 		if (repaymentRate <= 0) {
-		    // 利息已经扣除完毕，将剩余的金额从本金中扣除
-		    repayment = loan.getLoan() - Math.abs(repaymentRate);  // 将剩余金额作为本金还款
-		    repaymentRate = 0.0;  // 将剩余利息设为0
+			repayment = loan.getLoan() - Math.abs(repaymentRate); // 將剩餘金額作為本金還款
+			repaymentRate = 0.0; // 將剩餘利息設置為零
 		}
 
 		loan.setLoan(repayment);
 		loan.setLoanRate(repaymentRate);
 		loanDao.save(loan);
-		
-		return new BankResponse("還款完成");	}
+
+		return new BankResponse("繳款完成");
+	}
 
 }

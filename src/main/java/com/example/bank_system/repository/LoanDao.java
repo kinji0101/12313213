@@ -19,11 +19,6 @@ public interface LoanDao extends JpaRepository<Loan, String> {
 
 	public List<Loan> findByBank(Bank bank);
 
-	Optional<Loan> findById(Integer id);
-	
-	//public List<Loan> findAll();
-	
-
-	//public void save(Double repayment);
+	public Optional<Loan> findById(Integer id);
 
 }

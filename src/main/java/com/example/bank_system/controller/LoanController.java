@@ -33,7 +33,7 @@ public class LoanController {
 	//還款
 	@PostMapping("/repayment")
 	public BankResponse repayment(@RequestBody BankRequest bankRequest) {
-		return loanService.repayment(bankRequest.getCard(), bankRequest.getAccount(), bankRequest.getPassword(),bankRequest.getId() ,bankRequest.getAmount());
+		return loanService.repayment(bankRequest.getId() ,bankRequest.getAmount());
 	}
 
 }
