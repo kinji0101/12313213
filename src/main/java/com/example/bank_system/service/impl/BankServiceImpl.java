@@ -39,15 +39,9 @@ public class BankServiceImpl implements BankService {
 		for (Bank item : bankList) {
 			if (!StringUtils.hasText(item.getCard()) || !StringUtils.hasText(item.getName())
 					|| !StringUtils.hasText(item.getAddress()) || !StringUtils.hasText(item.getEmail())
-					|| item.getPhoneNumber() == null || item.getDeposit() == null || item.getDepositRate() == null
-					|| item.getOffer() == null) {
+					|| item.getPhoneNumber() == null) {
 				return new BankResponse("add Client error");
-			}
 
-			for (Loan item2 : loans) {
-				if (item2.getLoan() == null || item2.getLoanRate() == null || item2.getInstallments() == null) {
-					return new BankResponse("add Client error");
-				}
 			}
 			if (bankDao.existsById(item.getCard())) {
 				errorBank.add(item);

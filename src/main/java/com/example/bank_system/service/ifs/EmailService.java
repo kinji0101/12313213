@@ -16,6 +16,7 @@ public class EmailService {
 	@Autowired
 	private JavaMailSender mailSender;
 
+	//獲取貸款表的用戶郵箱
 	public void sendBillingStatements(List<Loan> loans) {
 		for (Loan loan : loans) {
 			String email = loan.getBank().getEmail();
@@ -25,12 +26,14 @@ public class EmailService {
 		}
 	}
 
+	//取得貸款資料
 	private String generateBillingStatement(Loan loan) {
 		Integer id = loan.getId();
 		double loanAmount = loan.getLoan();
 		double loanRate = loan.getLoanRate();
 		double installmentAmount = installmentAmount(loan);
 
+		//設置郵件內容
 		StringBuilder statementBuilder = new StringBuilder();
 		statementBuilder.append("Loan Id:").append(id).append("\n");
 		statementBuilder.append("Loan Amount: $").append(loanAmount).append("\n");
@@ -40,6 +43,7 @@ public class EmailService {
 		return statementBuilder.toString();
 	}
 
+	//計算本期金額
 	private double installmentAmount(Loan loan) {
 		double loanAmount = loan.getLoan();
 		double loanRate = loan.getLoanRate();
@@ -51,6 +55,7 @@ public class EmailService {
 		return installmentAmount;
 	}
 
+	//使用JavaMailSender接口發送郵件
 	public void sendEmail(String toEmail, String subject, String body) {
 		try {
 			SimpleMailMessage message = new SimpleMailMessage();
