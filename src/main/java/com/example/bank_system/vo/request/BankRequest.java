@@ -49,6 +49,12 @@ public class BankRequest {
 	public Integer amount;
 
 	public Integer installments;
+	
+	private String card2;
+	
+	private Integer withdraw;
+	
+	private Integer transferMoney;
 
 	public BankRequest() {
 		super();
@@ -78,6 +84,16 @@ public class BankRequest {
 		this.createDate = createDate;
 		this.amount = amount;
 		this.installments = installments;
+	}
+	
+	
+
+	public String getCard2() {
+		return card2;
+	}
+
+	public void setCard2(String card2) {
+		this.card2 = card2;
 	}
 
 	public Bank getBank() {
@@ -231,5 +247,28 @@ public class BankRequest {
 	public void setInstallments(Integer installments) {
 		this.installments = installments;
 	}
+
+	public Integer getWithdraw() {
+		return withdraw;
+	}
+
+	public void setWithdraw(Integer withdraw) {
+		this.withdraw = withdraw;
+	}
+
+	public Integer getTransferMoney() {
+		return transferMoney;
+	}
+
+	public void setTransferMoney(Integer transferMoney) {
+		this.transferMoney = transferMoney;
+	}
+	
+	
+
+	
+	
+
+	
 
 }

@@ -2,6 +2,8 @@ package com.example.bank_system.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,5 +52,33 @@ public class BankController {
 	public BankResponse getDepositRate(@RequestBody BankRequest bankRequest) {
 		return bankService.getDepositRate(bankRequest.getCard(), bankRequest.getAccount(), bankRequest.getPassword());
 	}
+	
+
+	@PostMapping("/login")
+	private BankResponse login(@RequestBody BankRequest request, HttpSession httpSession) {
+		httpSession.setAttribute("card", request.getCard());
+		httpSession.setAttribute("password", request.getPassword());
+		return bankService.login(request);	
+		
+
+	}
+
+	@PostMapping("/get_Deposit_By_Card_And_Password")
+	private BankResponse getDepositByCardAndPassword(@RequestBody BankRequest request, HttpSession httpSession) {
+		httpSession.setAttribute("card", request.getCard());
+		httpSession.setAttribute("password", request.getPassword());
+		return bankService.getDepositByCardAndPassword(request);
+	}
+
+	@PostMapping("/withdraw_By_Card_And_Password")
+	private BankResponse withdrawByCardAndPassword(@RequestBody BankRequest request) {
+		return bankService.withdrawByCardAndPassword(request);
+	}
+	@PostMapping("/transfer_Money")
+	private BankResponse transferMoney(@RequestBody BankRequest request) {
+		return bankService.transferMoney(request);
+	}
 
 }
+
+

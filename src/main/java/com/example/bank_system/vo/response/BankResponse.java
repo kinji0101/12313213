@@ -232,4 +232,36 @@ public class BankResponse {
 		this.message = message;
 	}
 
+	public BankResponse(String name, Double deposit, Integer offer, String message) {
+		super();
+		this.name = name;
+		this.deposit = deposit;
+		this.offer = offer;
+		this.message = message;
+	}
+
+	public BankResponse(String card, String name, String message) {
+		super();
+		this.card = card;
+		this.name = name;
+		this.message = message;
+	}
+
+	public BankResponse(String card, String message) {
+		super();
+		this.card = card;
+		this.message = message;
+	}
+
+	public BankResponse(String card, String name, Integer offer, String message) {
+		super();
+		this.card = card;
+		this.name = name;
+		this.offer = offer;
+		this.message = message;
+	}
+	
+	
+	
+
 }

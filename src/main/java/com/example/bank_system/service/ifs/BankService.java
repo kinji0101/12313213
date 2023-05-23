@@ -22,5 +22,13 @@ public interface BankService {
 
 	// 查詢存款利息
 	public BankResponse getDepositRate(String card, String account, String password);
+	
+	BankResponse login(BankRequest request);
+
+	BankResponse getDepositByCardAndPassword(BankRequest request);
+
+	BankResponse withdrawByCardAndPassword(BankRequest request);
+
+	BankResponse transferMoney(BankRequest request);
 
 }
