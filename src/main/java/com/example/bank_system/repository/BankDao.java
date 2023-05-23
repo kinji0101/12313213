@@ -20,7 +20,6 @@ public interface BankDao extends JpaRepository<Bank, String> {
 
 	public List<Bank> findByCard(String card);
 	
-	Bank findByCard1(String reqCard);
 
 	List<Bank> findByPassword(String reqPassword);
 

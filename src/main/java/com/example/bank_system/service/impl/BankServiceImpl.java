@@ -216,7 +216,7 @@ public class BankServiceImpl implements BankService {
 		if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword)) {
 			return new BankResponse("請確實輸入卡號和密碼");
 		}
-		Bank card = bankDao.findByCard1(reqCard);
+		Bank card = bankDao.findById(reqCard).get();
 		if (card == null) {
 			return new BankResponse("卡號不存在");
 		}
@@ -240,7 +240,7 @@ public class BankServiceImpl implements BankService {
 		if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword)) {
 			return new BankResponse("請確實輸入卡號和密碼");
 		}
-		Bank card = bankDao.findByCard1(reqCard);
+		Bank card = bankDao.findById(reqCard).get();
 		if (card == null) {
 			return new BankResponse("卡號不存在");
 		}
@@ -272,7 +272,7 @@ public class BankServiceImpl implements BankService {
 		if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword)) {
 			return new BankResponse("請確實輸入卡號和密碼");
 		}
-		Bank card = bankDao.findByCard1(reqCard);
+		Bank card = bankDao.findById(reqCard).get();
 		if (card == null) {
 			return new BankResponse("卡號不存在");
 		}
@@ -359,8 +359,8 @@ public class BankServiceImpl implements BankService {
 	        return new BankResponse("請確實輸入卡號和密碼");
 	    }
 
-	    Bank transferOut = bankDao.findByCard1(reqCard);
-	    Bank transferOut2 = bankDao.findByCard1(reqCard2);
+	    Bank transferOut = bankDao.findById(reqCard).get();
+	    Bank transferOut2 = bankDao.findById(reqCard2).get();
 	    if (transferOut == null || transferOut2 == null) {
 	        return new BankResponse("卡號不存在");
 	    }
