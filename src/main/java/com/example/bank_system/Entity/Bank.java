@@ -22,6 +22,9 @@ public class Bank {
 	@Column(name = "address")
 	private String address; //¤áÄy
 	
+	@Column(name = "email")
+	private String email; 
+	
 	@Column(name = "phone_number")
 	private Integer phoneNumber; //¹q¸Ü¸¹½X
 	
@@ -118,6 +121,14 @@ public class Bank {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	

@@ -1,10 +1,7 @@
 package com.example.bank_system.Service.Impl;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -27,28 +24,27 @@ public class BankServiceImpl implements BankService {
 	@Autowired
 	private BankDao bankDao;
 
-	@Transactional
 	@Override
 	public BankResponse login(BankRequest request) {
 		String reqCard = request.getCard();
 		String reqPassword = request.getPassword();
 		if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword)) {
-			return new BankResponse("½Ğ½T¹ê¿é¤J¥d¸¹©M±K½X");
+			return new BankResponse("è«‹ç¢ºå¯¦è¼¸å…¥å¡è™Ÿå’Œå¯†ç¢¼");
 		}
 		Bank card = bankDao.findByCard(reqCard);
 		if (card == null) {
-			return new BankResponse("¥d¸¹¤£¦s¦b");
+			return new BankResponse("å¡è™Ÿä¸å­˜åœ¨");
 		}
 		List<Bank> pwd = bankDao.findByPassword(reqPassword);
 		if (pwd.isEmpty()) {
-			return new BankResponse("±K½X¤£¦s¦b");
+			return new BankResponse("å¯†ç¢¼ä¸å­˜åœ¨");
 		}
 		for (Bank bank : pwd) {
 			if (bank.getCard().equals(reqCard) && bank.getPassword().equals(reqPassword)) {
-				return new BankResponse(card.getName(), "µn¤J¦¨¥\");
+				return new BankResponse(card.getCard(),card.getName(),card.getOffer(), "ç™»å…¥æˆåŠŸ");
 			}
 		}
-		return new BankResponse(reqCard, "±b¸¹¿ù»~©Î±K½X¿ù»~!");
+		return new BankResponse(reqCard, "å¸³è™ŸéŒ¯èª¤æˆ–å¯†ç¢¼éŒ¯èª¤!");
 	}
 
 	@Transactional
@@ -57,15 +53,15 @@ public class BankServiceImpl implements BankService {
 		String reqCard = request.getCard();
 		String reqPassword = request.getPassword();
 		if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword)) {
-			return new BankResponse("½Ğ½T¹ê¿é¤J¥d¸¹©M±K½X");
+			return new BankResponse("è«‹ç¢ºå¯¦è¼¸å…¥å¡è™Ÿå’Œå¯†ç¢¼");
 		}
 		Bank card = bankDao.findByCard(reqCard);
 		if (card == null) {
-			return new BankResponse("¥d¸¹¤£¦s¦b");
+			return new BankResponse("å¡è™Ÿä¸å­˜åœ¨");
 		}
 		List<Bank> pwdList = bankDao.findByPassword(reqPassword);
 		if (pwdList == null || pwdList.isEmpty()) {
-			return new BankResponse("±K½X¤£¦s¦b");
+			return new BankResponse("å¯†ç¢¼ä¸å­˜åœ¨");
 		}
 		boolean isPasswordMatched = false;
 		for (Bank pwd : pwdList) {
@@ -75,10 +71,10 @@ public class BankServiceImpl implements BankService {
 			}
 		}
 		if (isPasswordMatched) {
-			String message = "±b¤á¾lÃB¡G" + card.getDeposit();
+			String message = "å¸³æˆ¶é¤˜é¡ï¼š" + card.getDeposit();
 			return new BankResponse(request.getCard(), card.getName(), message);
 		} else {
-			return new BankResponse(request.getCard(), "±b¸¹¿ù»~©Î±K½X¿ù»~!");
+			return new BankResponse(request.getCard(), "å¸³è™ŸéŒ¯èª¤æˆ–å¯†ç¢¼éŒ¯èª¤!");
 		}
 	}
 
@@ -87,35 +83,34 @@ public class BankServiceImpl implements BankService {
 	public BankResponse withdrawByCardAndPassword(BankRequest request) {
 		String reqCard = request.getCard();
 		String reqPassword = request.getPassword();
-		int reqWithdraw = request.getWithdraw();
+		Integer reqWithdraw = request.getWithdraw();
 		if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword)) {
-			return new BankResponse("½Ğ½T¹ê¿é¤J¥d¸¹©M±K½X");
+			return new BankResponse("è«‹ç¢ºå¯¦è¼¸å…¥å¡è™Ÿå’Œå¯†ç¢¼");
 		}
 		Bank card = bankDao.findByCard(reqCard);
 		if (card == null) {
-			return new BankResponse("¥d¸¹¤£¦s¦b");
+			return new BankResponse("å¡è™Ÿä¸å­˜åœ¨");
 		}
 		List<Bank> pwd = bankDao.findByPassword(reqPassword);
 		if (pwd.isEmpty()) {
-			return new BankResponse("±K½X¤£¦s¦b");
+			return new BankResponse("å¯†ç¢¼ä¸å­˜åœ¨");
 		}
 		for (Bank bank : pwd) {
 			if (bank.getCard().equals(reqCard) && bank.getPassword().equals(reqPassword)) {
 				if (reqWithdraw <= 0) {
-					return new BankResponse("´£´Úª÷ÃB¤£¦Xªk");
+					return new BankResponse("ææ¬¾é‡‘é¡ä¸åˆæ³•");
 				} else if (card.getDeposit() < reqWithdraw) {
-					return new BankResponse("´£´Ú¥¢±Ñ");
+					return new BankResponse("ææ¬¾å¤±æ•—");
 				} else {
 					card.setDeposit(card.getDeposit() - reqWithdraw);
 					bankDao.save(card);
-					String message = "±b¤á¾lÃB¡G" + card.getDeposit();
+					String message = "å¸³æˆ¶é¤˜é¡ï¼š" + card.getDeposit();
 					return new BankResponse(request.getCard(), card.getName(), message);
 				}
 			}
 		}
-		return new BankResponse(reqCard, "±b¸¹¿ù»~©Î±K½X¿ù»~!");
+		return new BankResponse(reqCard, "å¸³è™ŸéŒ¯èª¤æˆ–å¯†ç¢¼éŒ¯èª¤!");
 	}
-	
 
 	public class MyUpdater {
 
@@ -128,32 +123,32 @@ public class BankServiceImpl implements BankService {
 			Calendar cal = Calendar.getInstance();
 			int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-			// ³]©w¬°¨C­Ó¤ëªº²Ä¤@¤Ñ¡A­â±á12ÂI
+			// è¨­å®šç‚ºæ¯å€‹æœˆçš„ç¬¬ä¸€å¤©ï¼Œå‡Œæ™¨12é»
 			cal.set(Calendar.DAY_OF_MONTH, 1);
 			cal.set(Calendar.HOUR_OF_DAY, 0);
 			cal.set(Calendar.MINUTE, 0);
 			cal.set(Calendar.SECOND, 0);
 
-			// ­pºâ¨C­Ó¤ëªº®É¶¡¶¡¹j¡A³æ¦ì¬°¬í
+			// è¨ˆç®—æ¯å€‹æœˆçš„æ™‚é–“é–“éš”ï¼Œå–®ä½ç‚ºç§’
 			long interval = TimeUnit.DAYS.toSeconds(daysInMonth);
 
 			scheduler.scheduleAtFixedRate(new Runnable() {
 				@Override
 				public void run() {
-					List<Bank> banks = bankDao.findAll(); // ¨ú±o©Ò¦³»È¦æ±b¤á
+					List<Bank> banks = bankDao.findAll(); // å–å¾—æ‰€æœ‰éŠ€è¡Œå¸³æˆ¶
 					for (Bank bank : banks) {
-						if (bank.getDeposit() >= 50000 && bank.getDeposit() < 100000) { // ¦pªG±b¤á¾lÃB¶W¹L50000¤¸¥B¤p©ó100000¤¸
-							int offerCount = bank.getOffer(); // ¨ú±oÀu´f¦¸¼Æ
-							if (offerCount < 10) { // §PÂ_Àu´f¦¸¼Æ¬O§_¤w¹F¤W­­
-								bank.setOffer(offerCount + 1); // ¼W¥[Àu´f¦¸¼Æ
-								bankDao.save(bank); // §ó·s¸ê®Æ®w
+						if (bank.getDeposit() >= 50000 && bank.getDeposit() < 100000) { // å¦‚æœå¸³æˆ¶é¤˜é¡è¶…é50000å…ƒä¸”å°æ–¼100000å…ƒ
+							int offerCount = bank.getOffer(); // å–å¾—å„ªæƒ æ¬¡æ•¸
+							if (offerCount < 10) { // åˆ¤æ–·å„ªæƒ æ¬¡æ•¸æ˜¯å¦å·²é”ä¸Šé™
+								bank.setOffer(offerCount + 1); // å¢åŠ å„ªæƒ æ¬¡æ•¸
+								bankDao.save(bank); // æ›´æ–°è³‡æ–™åº«
 							}
 						}
 						if (bank.getDeposit() >= 100000) {
-							int offerCount = bank.getOffer(); // ¨ú±oÀu´f¦¸¼Æ
-							if (offerCount < 15) { // §PÂ_Àu´f¦¸¼Æ¬O§_¤w¹F¤W­­
-								bank.setOffer(offerCount + 1); // ¼W¥[Àu´f¦¸¼Æ
-								bankDao.save(bank); // §ó·s¸ê®Æ®w
+							int offerCount = bank.getOffer(); // å–å¾—å„ªæƒ æ¬¡æ•¸
+							if (offerCount < 15) { // åˆ¤æ–·å„ªæƒ æ¬¡æ•¸æ˜¯å¦å·²é”ä¸Šé™
+								bank.setOffer(offerCount + 1); // å¢åŠ å„ªæƒ æ¬¡æ•¸
+								bankDao.save(bank); // æ›´æ–°è³‡æ–™åº«
 							}
 						}
 					}
@@ -166,57 +161,107 @@ public class BankServiceImpl implements BankService {
 		}
 	}
 
-
+	
 	@Transactional
 	@Override
 	public BankResponse transferMoney(BankRequest request) {
-		String reqCard = request.getCard();
-		String reqPassword = request.getPassword();
-		String reqName = request.getName();
-		int reqTransMoney = request.getTransferMoney();
-		if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword)) {
-			return new BankResponse("½Ğ½T¹ê¿é¤J¥d¸¹©M±K½X");
-		}
+	    String reqCard = request.getCard();
+	    String reqPassword = request.getPassword();
+	    String reqName = request.getName();
+	    String reqCard2 = request.getCard2();
+	    int reqTransMoney = request.getTransferMoney();
+	    if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword) ||!StringUtils.hasText(reqCard2)) {
+	        return new BankResponse("è«‹ç¢ºå¯¦è¼¸å…¥å¡è™Ÿå’Œå¯†ç¢¼");
+	    }
 
-		Bank transferOut = bankDao.findByCard(reqCard);
-		if (transferOut == null) {
-			return new BankResponse("¥d¸¹¤£¦s¦b");
-		}
+	    Bank transferOut = bankDao.findByCard(reqCard);
+	    Bank transferOut2 = bankDao.findByCard(reqCard2);
+	    if (transferOut == null || transferOut2 == null) {
+	        return new BankResponse("å¡è™Ÿä¸å­˜åœ¨");
+	    }
 
-		Bank transferIn = bankDao.findByName(reqName);
-		if (transferIn == null) {
-			return new BankResponse("Âà¤J±b¤á¤£¦s¦b");
-		}
+	    Bank transferIn = bankDao.findByName(reqName);
+	    if (transferIn == null) {
+	        return new BankResponse("è½‰å…¥å¸³æˆ¶ä¸å­˜åœ¨");
+	    }
 
-		if (transferIn.getCard().equals(transferOut.getCard())) {
-			return new BankResponse("µLªkÂà±bµ¹¦Û¤v");
-		}
+	    if (transferIn.getCard().equals(transferOut.getCard())) {
+	        return new BankResponse("ç„¡æ³•è½‰å¸³çµ¦è‡ªå·±");
+	    }
 
-		if (reqTransMoney <= 0) {
-			return new BankResponse("Âà±b¥¢±Ñ");
-		}
+	    if (reqTransMoney <= 0) {
+	        return new BankResponse("è½‰å¸³å¤±æ•—");
+	    }
 
-		if (transferOut.getDeposit() < reqTransMoney) {
-			return new BankResponse("¾lÃB¤£¨¬");
-		}
+	    int offerCount = request.getOffer(); 
 
-		int offerCount = request.getOffer(); // ¨ú±o¨Ï¥ÎªÌªºÀu´f¦¸¼Æ
-		int actualTransMoney = reqTransMoney;
+	    int actualTransMoney = reqTransMoney;
 
-		if (offerCount > 0) { // ­Y¨Ï¥ÎªÌ¦³Àu´f¦¸¼Æ
-			transferOut.setOffer(offerCount - 1); // ´î¤Ö¤@¦¸Àu´f¦¸¼Æ
-			actualTransMoney = reqTransMoney; // ¹ê»ÚÂà±bª÷ÃB¤£ÅÜ
-		} else { // ­Y¨Ï¥ÎªÌµLÀu´f¦¸¼Æ
-			actualTransMoney += 10; // ¦©°£10¤¸Âà±b¶O¥Î
-		}
-		transferOut.setDeposit(transferOut.getDeposit() - actualTransMoney);
-		transferIn.setDeposit(transferIn.getDeposit() + actualTransMoney);
+	    if (offerCount > 0) { // è‹¥ä½¿ç”¨è€…æœ‰å„ªæƒ æ¬¡æ•¸
+	        transferOut.setOffer(offerCount - 1); // æ¸›å°‘ä¸€æ¬¡å„ªæƒ æ¬¡æ•¸
+	        actualTransMoney = reqTransMoney; // å¯¦éš›è½‰å¸³é‡‘é¡ä¸è®Š
+	    } else { // è‹¥ä½¿ç”¨è€…ç„¡å„ªæƒ æ¬¡æ•¸
+	        actualTransMoney += 10; // æ‰£é™¤10å…ƒè½‰å¸³è²»ç”¨
+	    }
+	    transferOut.setDeposit(transferOut.getDeposit() - actualTransMoney);
+	    transferIn.setDeposit(transferIn.getDeposit() + actualTransMoney);
 
-		bankDao.save(transferOut);
-		bankDao.save(transferIn);
+	    bankDao.save(transferOut);
+	    bankDao.save(transferIn);
 
-		String message = "±b¤á¾lÃB¡G" + transferOut.getDeposit();
-		return new BankResponse(reqCard, transferOut.getName(), message, "Âà±b¦¨¥\");
+	    return new BankResponse(transferOut.getName(), transferOut.getDeposit(),transferOut.getOffer(), "è½‰å¸³æˆåŠŸ");
 	}
+	
+//	@Transactional
+//	@Override
+//	public BankResponse transferMoney(BankRequest request) {
+//	    String reqCard = request.getCard();
+//	    String reqPassword = request.getPassword();
+//	    String reqName = request.getName();
+//	    String reqCard2 = request.getCard2(); 
+//	    int reqTransMoney = request.getTransferMoney();
+//	    if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword) || !StringUtils.hasText(reqCard2)) {
+//	        return new BankResponse("è«‹ç¢ºå¯¦è¼¸å…¥å¡è™Ÿå’Œå¯†ç¢¼");
+//	    }
+//
+//	    Bank transferOut = bankDao.findByCard(reqCard);
+//	    Bank transferIn = bankDao.findByCard(reqCard2);
+//
+//	    if (transferOut == null || transferIn == null) {
+//	        return new BankResponse("å¡è™Ÿä¸å­˜åœ¨");
+//	    }
+//
+//	    if (!transferOut.getCard().equals(reqCard) || !transferOut.getPassword().equals(reqPassword)) {
+//	        return new BankResponse("å¡è™Ÿå’Œå¯†ç¢¼ä¸åŒ¹é…");
+//	    }
+//
+//	    if (!transferIn.getName().equals(reqName) || !transferIn.getCard().equals(reqCard2)) {
+//	        return new BankResponse("å¡è™Ÿèˆ‡æŒæœ‰äººä¸åŒ¹é…");
+//	    }
+//
+//	    if (reqTransMoney <= 0) {
+//	        return new BankResponse("è½‰å¸³å¤±æ•—");
+//	    }
+//
+//	    int offerCount = request.getOffer();
+//
+//	    int actualTransMoney = reqTransMoney;
+//
+//	    if (offerCount > 0) { // è‹¥ä½¿ç”¨è€…æœ‰å„ªæƒ æ¬¡æ•¸
+//	        transferOut.setOffer(offerCount - 1); // æ¸›å°‘ä¸€æ¬¡å„ªæƒ æ¬¡æ•¸
+//	        actualTransMoney = reqTransMoney; // å¯¦éš›è½‰å¸³é‡‘é¡ä¸è®Š
+//	    } else { // è‹¥ä½¿ç”¨è€…ç„¡å„ªæƒ æ¬¡æ•¸
+//	        actualTransMoney += 10; // æ‰£é™¤10å…ƒè½‰å¸³è²»ç”¨
+//	    }
+//	    transferOut.setDeposit(transferOut.getDeposit() - actualTransMoney);
+//	    transferIn.setDeposit(transferIn.getDeposit() + actualTransMoney);
+//
+//	    bankDao.save(transferOut);
+//	    bankDao.save(transferIn);
+//
+//	    return new BankResponse(transferOut.getName(), transferOut.getDeposit(), transferOut.getOffer(), "è½‰å¸³æˆåŠŸ");
+//	}
+
+
 
 }

@@ -19,6 +19,8 @@ public class BankRequest {
 	
 	private String password;
 	
+	private String email;
+	
 	private String address;
 	
 	private Integer withdraw;
@@ -36,6 +38,8 @@ public class BankRequest {
 	private Integer offer;
 	
 	private Integer transferMoney;
+	
+	private String card2;
 	
 	
 	public BankRequest() {
@@ -152,6 +156,24 @@ public class BankRequest {
 	public void setTransferMoney(Integer transferMoney) {
 		this.transferMoney = transferMoney;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getCard2() {
+		return card2;
+	}
+
+	public void setCard2(String card2) {
+		this.card2 = card2;
+	}
+
+	
 	
 	
 

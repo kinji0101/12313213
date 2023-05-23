@@ -21,6 +21,8 @@ public class BankResponse {
 	
 	private String address;
 	
+	private String email;
+	
 	private Integer withdraw;
 	
 	private Integer phoneNumber;
@@ -29,7 +31,7 @@ public class BankResponse {
 	
 	private Integer depositRate;
 	
-	private Integer  loan;
+	private Integer loan;
 	
 	private Integer loanRates;
 	
@@ -37,7 +39,7 @@ public class BankResponse {
 	
 	private Integer transferMoney;
 	
-	private String messege;
+	private String message;
 
 	public BankResponse() {
 		
@@ -95,6 +97,14 @@ public class BankResponse {
 		return loan;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public void setLoan(Integer loan) {
 		this.loan = loan;
 	}
@@ -115,12 +125,12 @@ public class BankResponse {
 		this.offer = offer;
 	}
 
-	public String getMessege() {
-		return messege;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setMessege(String messege) {
-		this.messege = messege;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	public Bank getBank() {
@@ -158,57 +168,49 @@ public class BankResponse {
 	}
 
 	public BankResponse(String card, String name, String address, Integer phoneNumber, Integer deposit,
-			Integer depositRate, Integer loan, Integer loanRates, Integer offer, String messege) {
+			Integer depositRate, Integer loan, Integer loanRates, Integer offer, String message) {
 		super();
 		this.card = card;
 		this.name = name;
-		this.address = address;
-		this.phoneNumber = phoneNumber;
-		this.deposit = deposit;
-		this.depositRate = depositRate;
-		this.loan = loan;
-		this.loanRates = loanRates;
+	}
+
+	public BankResponse(String message) {
+		super();
+		this.message = message;
+	}
+
+	public BankResponse(String card, String name, String message) {
+		super();
+		this.card = card;
+		this.name = name;
+		this.message = message;
+	}
+
+	public BankResponse(String card, String message) {
+		super();
+		this.card = card;
+		this.message = message;
+	}
+
+	public BankResponse(String card, String name, Integer offer, String message) {
+		super();
+		this.card = card;
+		this.name = name;
 		this.offer = offer;
-		this.messege = messege;
+		this.message = message;
 	}
 
-	public BankResponse(String messege) {
+	public BankResponse(String name, Integer deposit, Integer offer, String message) {
 		super();
-		this.messege = messege;
-	}
-
-	public BankResponse(String card, String messege) {
-		super();
-		this.card = card;
-		this.messege = messege;
-	}
-
-	public BankResponse(Bank bank) {
-		super();
-		this.bank = bank;
-	}
-
-	public BankResponse(String card, String name, String messege) {
-		super();
-		this.card = card;
 		this.name = name;
-		this.messege = messege;
+		this.deposit = deposit;
+		this.offer = offer;
+		this.message = message;
 	}
 
-	public BankResponse(String card2, String name2, String message, String string) {
-		// TODO Auto-generated constructor stub
-	}
-	
-	
-
 	
 	
 	
 	
-
-
 	
-	
-	
-
 }
