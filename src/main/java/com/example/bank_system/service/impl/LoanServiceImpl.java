@@ -129,7 +129,7 @@ public class LoanServiceImpl implements LoanService {
 	}
 
 	// 結帳帳單
-	// @Scheduled(cron = "0 0 0 12 * ?") // 每月1日执行
+	// @Scheduled(cron = "0 0 15 12 * ?")  每月12日下午3點開始結帳
 	@Scheduled(cron = "0 * * * * ?")
 	public void statement() {
 

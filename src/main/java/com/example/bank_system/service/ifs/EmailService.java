@@ -59,7 +59,7 @@ public class EmailService {
 		double loanRate = loan.getLoanRate();
 		int installments = loan.getInstallments();
 
-		// 根据贷款金额、贷款利率和分期期数计算利息金额
+		// 根據貸款金額、貸款利率和分期期數計算利息金額
 		double installmentAmount = (loanAmount + loanRate) / installments;
 
 		return installmentAmount;

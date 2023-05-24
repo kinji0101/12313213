@@ -168,7 +168,7 @@ public class BankServiceImpl implements BankService {
 	}
 
 	// 計算存款利息金額
-	// @Scheduled(cron = "0 0 15 * * ?")
+	// @Scheduled(cron = "0 0 15 * * ?") 每日15點開始結帳
 	@Scheduled(cron = "0 * * * * ?")
 	public void calculateInterest() {
 
