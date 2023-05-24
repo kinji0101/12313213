@@ -389,7 +389,10 @@ public class BankServiceImpl implements BankService {
 	    if (reqTransMoney <= 0) {
 	        return new BankResponse("轉帳失敗");
 	    }
-
+	    
+	    if (reqTransMoney > transferOut.getDeposit()){
+	    	return new BankResponse("轉帳失敗");
+	    }
 	    int offerCount = request.getOffer(); 
 
 	    int actualTransMoney = reqTransMoney;
