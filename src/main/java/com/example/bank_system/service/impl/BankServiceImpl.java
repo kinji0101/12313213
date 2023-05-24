@@ -211,91 +211,94 @@ public class BankServiceImpl implements BankService {
 	
 	@Override
 	public BankResponse login(BankRequest request) {
-		String reqCard = request.getCard();
-		String reqPassword = request.getPassword();
-		if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword)) {
-			return new BankResponse("請確實輸入卡號和密碼");
-		}
-		Bank card = bankDao.findById(reqCard).get();
-		if (card == null) {
-			return new BankResponse("卡號不存在");
-		}
-		List<Bank> pwd = bankDao.findByPassword(reqPassword);
-		if (pwd.isEmpty()) {
-			return new BankResponse("密碼不存在");
-		}
-		for (Bank bank : pwd) {
-			if (bank.getCard().equals(reqCard) && bank.getPassword().equals(reqPassword)) {
-				return new BankResponse(card.getCard(),card.getName(),card.getOffer(), "登入成功");
-			}
-		}
-		return new BankResponse(reqCard, "帳號錯誤或密碼錯誤!");
+	    String reqCard = request.getCard();
+	    String reqPassword = request.getPassword();
+	    if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword)) {
+	        return new BankResponse("請確實輸入卡號和密碼");
+	    }
+
+	    Optional<Bank> optionalCard = bankDao.findById(reqCard);
+	    if (!optionalCard.isPresent()) {
+	        return new BankResponse("卡號不存在");
+	    }
+
+	    List<Bank> pwd = bankDao.findByPassword(reqPassword);
+	    if (pwd.isEmpty()) {
+	        return new BankResponse("密碼不存在");
+	    }
+
+	    for (Bank bank : pwd) {
+	        if (bank.getCard().equals(reqCard) && bank.getPassword().equals(reqPassword)) {
+	            return new BankResponse(bank.getCard(), bank.getName(), bank.getOffer(), "登入成功");
+	        }
+	    }
+
+	    return new BankResponse(reqCard, "帳號錯誤或密碼錯誤!");
 	}
+
 
 	@Transactional
 	@Override
 	public BankResponse getDepositByCardAndPassword(BankRequest request) {
-		String reqCard = request.getCard();
-		String reqPassword = request.getPassword();
-		if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword)) {
-			return new BankResponse("請確實輸入卡號和密碼");
-		}
-		Bank card = bankDao.findById(reqCard).get();
-		if (card == null) {
-			return new BankResponse("卡號不存在");
-		}
-		List<Bank> pwdList = bankDao.findByPassword(reqPassword);
-		if (pwdList == null || pwdList.isEmpty()) {
-			return new BankResponse("密碼不存在");
-		}
-		boolean isPasswordMatched = false;
-		for (Bank pwd : pwdList) {
-			if (pwd.getCard().equals(reqCard)) {
-				isPasswordMatched = true;
-				break;
-			}
-		}
-		if (isPasswordMatched) {
-			String message = "帳戶餘額：" + card.getDeposit();
-			return new BankResponse(request.getCard(), card.getName(), message);
-		} else {
-			return new BankResponse(request.getCard(), "帳號錯誤或密碼錯誤!");
-		}
+	    String reqCard = request.getCard();
+	    String reqPassword = request.getPassword();
+	    if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword)) {
+	        return new BankResponse("請確實輸入卡號和密碼");
+	    }
+	    Optional<Bank> optionalCard = bankDao.findById(reqCard);
+	    if (!optionalCard.isPresent()) {
+	        return new BankResponse("卡號不存在");
+	    }
+	    Bank card = optionalCard.get();
+	    List<Bank> pwdList = bankDao.findByPassword(reqPassword);
+	    boolean isPasswordMatched = false;
+	    for (Bank pwd : pwdList) {
+	        if (pwd.getCard().equals(reqCard)) {
+	            isPasswordMatched = true;
+	            break;
+	        }
+	    }
+	    if (isPasswordMatched) {
+	        String message = "帳戶餘額：" + card.getDeposit();
+	        return new BankResponse(request.getCard(), card.getName(), message);
+	    } else {
+	        return new BankResponse(request.getCard(), "帳號錯誤或密碼錯誤!");
+	    }
 	}
+
 
 	@Transactional
 	@Override
 	public BankResponse withdrawByCardAndPassword(BankRequest request) {
-		String reqCard = request.getCard();
-		String reqPassword = request.getPassword();
-		Integer reqWithdraw = request.getWithdraw();
-		if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword)) {
-			return new BankResponse("請確實輸入卡號和密碼");
-		}
-		Bank card = bankDao.findById(reqCard).get();
-		if (card == null) {
-			return new BankResponse("卡號不存在");
-		}
-		List<Bank> pwd = bankDao.findByPassword(reqPassword);
-		if (pwd.isEmpty()) {
-			return new BankResponse("密碼不存在");
-		}
-		for (Bank bank : pwd) {
-			if (bank.getCard().equals(reqCard) && bank.getPassword().equals(reqPassword)) {
-				if (reqWithdraw <= 0) {
-					return new BankResponse("提款金額不合法");
-				} else if (card.getDeposit() < reqWithdraw) {
-					return new BankResponse("提款失敗");
-				} else {
-					card.setDeposit(card.getDeposit() - reqWithdraw);
-					bankDao.save(card);
-					String message = "帳戶餘額：" + card.getDeposit();
-					return new BankResponse(request.getCard(), card.getName(), message);
-				}
-			}
-		}
-		return new BankResponse(reqCard, "帳號錯誤或密碼錯誤!");
+	    String reqCard = request.getCard();
+	    String reqPassword = request.getPassword();
+	    Integer reqWithdraw = request.getWithdraw();
+	    if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword)) {
+	        return new BankResponse("請確實輸入卡號和密碼");
+	    }
+	    Optional<Bank> optionalCard = bankDao.findById(reqCard);
+	    if (!optionalCard.isPresent()) {
+	        return new BankResponse("卡號不存在");
+	    }
+	    Bank card = optionalCard.get();
+	    List<Bank> pwd = bankDao.findByPassword(reqPassword);
+	    for (Bank bank : pwd) {
+	        if (bank.getCard().equals(reqCard) && bank.getPassword().equals(reqPassword)) {
+	            if (reqWithdraw <= 0) {
+	                return new BankResponse("提款金額不合法");
+	            } else if (card.getDeposit() < reqWithdraw) {
+	                return new BankResponse("提款失敗");
+	            } else {
+	                card.setDeposit(card.getDeposit() - reqWithdraw);
+	                bankDao.save(card);
+	                String message = "帳戶餘額：" + card.getDeposit();
+	                return new BankResponse(request.getCard(), card.getName(), message);
+	            }
+	        }
+	    }
+	    return new BankResponse(reqCard, "帳號錯誤或密碼錯誤!");
 	}
+
 
 	public class MyUpdater {
 
@@ -359,12 +362,13 @@ public class BankServiceImpl implements BankService {
 	        return new BankResponse("請確實輸入卡號和密碼");
 	    }
 
-	    Bank transferOut = bankDao.findById(reqCard).get();
-	    Bank transferOut2 = bankDao.findById(reqCard2).get();
-	    if (transferOut == null || transferOut2 == null) {
+	    Optional<Bank> OPTransferOut = bankDao.findById(reqCard);
+	    Optional<Bank> OPTransferOut2 = bankDao.findById(reqCard2);
+	    
+	    if (OPTransferOut == null || OPTransferOut2 == null||!OPTransferOut2.isPresent()||!OPTransferOut.isPresent()) {
 	        return new BankResponse("卡號不存在");
 	    }
-
+	    Bank transferOut = OPTransferOut.get();
 	    Bank transferIn = bankDao.findByName(reqName);
 	    if (transferIn == null) {
 	        return new BankResponse("轉入帳戶不存在");
@@ -372,6 +376,14 @@ public class BankServiceImpl implements BankService {
 
 	    if (transferIn.getCard().equals(transferOut.getCard())) {
 	        return new BankResponse("無法轉帳給自己");
+	    }
+	    
+	    if (!transferOut.getCard().equals(reqCard) || !transferOut.getPassword().equals(reqPassword)) {
+	        return new BankResponse("卡號和密碼不匹配");
+	    }
+
+	    if (!transferIn.getName().equals(reqName) || !transferIn.getCard().equals(reqCard2)) {
+	        return new BankResponse("卡號與轉入者不匹配");
 	    }
 
 	    if (reqTransMoney <= 0) {
