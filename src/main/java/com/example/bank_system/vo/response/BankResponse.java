@@ -246,6 +246,13 @@ public class BankResponse {
 		this.name = name;
 		this.message = message;
 	}
+	
+	public BankResponse(String account, Double depositRate, String message) {
+		super();
+		this.account = account;
+		this.depositRate = depositRate;
+		this.message = message;
+	}
 
 	public BankResponse(String card, String message) {
 		super();
