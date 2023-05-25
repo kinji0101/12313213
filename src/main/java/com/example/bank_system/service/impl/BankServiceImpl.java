@@ -235,6 +235,34 @@ public class BankServiceImpl implements BankService {
 
 	    return new BankResponse(reqCard, "帳號錯誤或密碼錯誤!");
 	}
+	
+	@Override
+	public BankResponse login2(BankRequest request) {
+		String reqAccount = request.getAccount();
+		String reqPassword = request.getPassword();
+		BankResponse res = new BankResponse();
+		if (!StringUtils.hasText(reqAccount) || !StringUtils.hasText(reqPassword)) {
+			return new BankResponse("請確實輸入帳號和密碼");
+		}
+		Optional<Bank> op = bankDao.findByAccount(reqAccount);
+		
+		if (!op.isPresent()) {
+			return new BankResponse("帳號不存在");
+		}
+         Bank account = op.get();
+		List<Bank> pwd = bankDao.findByPassword(reqPassword);
+		if (pwd.isEmpty()) {
+			return new BankResponse("密碼不正確");
+		}
+		for (Bank bank : pwd) {
+			if (bank.getAccount().equals(reqAccount) && bank.getPassword().equals(reqPassword)) {
+				return new BankResponse(account.getAccount(),account.getDepositRate(), "登入成功");
+			}
+		}
+		res.setAccount(reqAccount);
+		res.setMessage("帳號錯誤或密碼錯誤!");
+		return res;
+	}
 
 
 	@Transactional
