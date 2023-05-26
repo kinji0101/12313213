@@ -188,6 +188,16 @@ public class BankServiceImpl implements BankService {
 			Double deposit = bank.getDeposit();
 			Double depositRate = bank.getDepositRate();
 			LocalDateTime createDate = bank.getCreateDate(); // 獲取帳戶申辦時間
+			
+			 // 判斷存款是否為null，若為null則設置為0
+		    if (deposit == null) {
+		        deposit = 0.0;
+		    }
+
+		    // 判斷存款利率是否為null，若為null則設置為0
+		    if (depositRate == null) {
+		        depositRate = 0.0;
+		    }
 
 			if (createDate.plusMonths(6).isAfter(currentDateTime)) { // 判断是否為新申辦帳戶
 				if (deposit >= 100000) {
