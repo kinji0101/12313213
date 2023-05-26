@@ -33,6 +33,8 @@ public class EmailService {
 
 	// 取得貸款資料
 	private String generateBillingStatement(Loan loan) {
+		String card = loan.getBank().getCard();
+		String name = loan.getBank().getName();
 		Integer id = loan.getId();
 		double loanAmount = loan.getLoan();
 		double loanRate = loan.getLoanRate();
@@ -40,10 +42,12 @@ public class EmailService {
 
 		// 設置郵件內容
 		StringBuilder statementBuilder = new StringBuilder();
-		statementBuilder.append("繳款代碼:").append(id).append("\n");
-		statementBuilder.append("本期本金: $").append(loanAmount).append("\n");
-		statementBuilder.append("本期利息: $").append(loanRate).append("\n");
-		statementBuilder.append("本期應繳金額: $").append(installmentAmount).append("\n");
+		statementBuilder.append("卡號:").append(card).append("<br>");
+		statementBuilder.append("姓名:").append(name).append("<br><br>");
+		statementBuilder.append("繳款代碼:").append(id).append("<br><br>");
+		statementBuilder.append("本期本金: $").append(loanAmount).append("<br>");
+		statementBuilder.append("本期利息: $").append(loanRate).append("<br>");
+		statementBuilder.append("本期應繳金額: $").append(installmentAmount).append("<br>");
 
 		return statementBuilder.toString();
 	}
