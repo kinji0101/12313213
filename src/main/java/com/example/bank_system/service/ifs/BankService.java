@@ -24,6 +24,8 @@ public interface BankService {
 	public BankResponse getDepositRate(String card, String account, String password);
 	
 	BankResponse login(BankRequest request);
+	
+	BankResponse login2(BankRequest request);
 
 	BankResponse getDepositByCardAndPassword(BankRequest request);
 

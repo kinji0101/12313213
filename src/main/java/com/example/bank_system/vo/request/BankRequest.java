@@ -60,10 +60,14 @@ public class BankRequest {
 		super();
 	}
 
+	
+	
+	
+
 	public BankRequest(Bank bank, List<Bank> bankList, List<Loan> loans, String card, String name, String address,
 			String account, String password, String email, String phoneNumber, Double deposit, Double depositRate,
 			Double loan, Double loanRate, Integer id, Integer offer, LocalDateTime createDate, Integer amount,
-			Integer installments) {
+			Integer installments, String card2, Integer withdraw, Integer transferMoney) {
 		super();
 		this.bank = bank;
 		this.bankList = bankList;
@@ -84,9 +88,10 @@ public class BankRequest {
 		this.createDate = createDate;
 		this.amount = amount;
 		this.installments = installments;
+		this.card2 = card2;
+		this.withdraw = withdraw;
+		this.transferMoney = transferMoney;
 	}
-	
-	
 
 	public String getCard2() {
 		return card2;
