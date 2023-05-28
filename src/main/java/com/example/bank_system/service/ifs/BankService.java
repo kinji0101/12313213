@@ -7,10 +7,7 @@ import com.example.bank_system.vo.request.BankRequest;
 import com.example.bank_system.vo.response.BankResponse;
 
 public interface BankService {
-
-	// 用戶註冊功能
-	public BankResponse addClient(BankRequest bankRequest);
-
+	
 	// 查詢用戶資料
 	public List<Bank> findByCard(String card);
 

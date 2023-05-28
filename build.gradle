@@ -18,6 +18,8 @@ dependencies {
 	implementation 'mysql:mysql-connector-java:8.0.31'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
+	implementation 'net.sf.ehcache:ehcache:2.10.6'
 	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

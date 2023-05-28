@@ -11,6 +11,6 @@ public interface LoanService {
 	public BankResponse getLoanRate(String card, String account, String password);
 
 	// 還款
-	public BankResponse repayment(Integer id, Integer amount);
+	public BankResponse repayment(Integer id, String card, String account, String password, Integer amount);
 
 }

@@ -22,12 +22,6 @@ public class BankController {
 	@Autowired
 	private BankService bankService;
 
-	// 用戶註冊功能
-	@PostMapping("add_client")
-	public BankResponse addDiner(@RequestBody BankRequest bankRequest) {
-		return bankService.addClient(bankRequest);
-	}
-
 	// 查詢用戶資料
 	@PostMapping("find_by_card")
 	public List<Bank> findByCard(@RequestBody BankRequest bankRequest) {

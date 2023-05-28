@@ -267,6 +267,12 @@ public class BankResponse {
 		this.offer = offer;
 		this.message = message;
 	}
+
+	public BankResponse(Bank bank, String message) {
+		this.bank = bank;
+		this.message = message;
+		
+		}
 	
 	
 	

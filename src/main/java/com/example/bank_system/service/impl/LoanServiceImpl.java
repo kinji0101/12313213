@@ -65,23 +65,23 @@ public class LoanServiceImpl implements LoanService {
 		Double loanRate = 0.0;
 
 		// get存款判斷信用分數
-		Double depoist = bank.getDeposit() + bank.getDepositRate();
+		Double deposit = bank.getDeposit() + bank.getDepositRate();
 		// 將所有貸款相加
 		Double totalLoan = loanDao.getTotalLoanAmountByCard(card);
 
-		if (depoist >= 100000) {
+		if (deposit >= 100000) {
 			if (totalLoan + loan > 150000) {
 				return new BankResponse("信用分數不足");
 			}
 		}
 
-		if (depoist >= 50000 && depoist < 100000) {
+		if (deposit >= 50000 && deposit < 100000) {
 			if (totalLoan + loan > 100000) {
 				return new BankResponse("信用分數不足");
 			}
 		}
 
-		if (depoist < 50000) {
+		if (deposit < 50000) {
 			return new BankResponse("信用分數不足");
 		}
 
@@ -94,6 +94,12 @@ public class LoanServiceImpl implements LoanService {
 
 		// 將貸款保存到資料庫
 		loanDao.save(loans);
+		
+		//更新存款資訊
+		deposit = loans.getBank().getDeposit() + loan;
+		bank.setDeposit(deposit);
+		bankDao.save(bank);
+		
 		return new BankResponse("貸款完成");
 	}
 
@@ -163,35 +169,60 @@ public class LoanServiceImpl implements LoanService {
 	// 還款
 	@Transactional
 	@Override
-	public BankResponse repayment(Integer id, Integer amount) {
+	public BankResponse repayment(Integer id, String card, String account, String password, Integer amount) {
 
-		if (id == null || amount == null) {
-			return new BankResponse("請檢查輸入欄位");
-		}
+		if (id == null || card.isEmpty() || account.isEmpty() || password.isEmpty() || amount == null) {
+	        return new BankResponse("請檢查輸入欄位");
+	    }
 
+		Optional<Bank> bankOp = bankDao.findById(card);
 		Optional<Loan> loanOp = loanDao.findById(id);
+		
+		if (!bankOp.isPresent()) {
+			return new BankResponse("卡號輸入錯誤");
+		}
+		
 		if (!loanOp.isPresent()) {
 			return new BankResponse("繳款代碼輸入錯誤");
 		}
+		
 
+		Bank bank = bankOp.get();
 		Loan loan = loanOp.get();
+		
+		if (!bank.getAccount().equals(account) || !bank.getPassword().equals(password)) {
+			return new BankResponse("帳號或密碼輸入錯誤");
+		}
+		
+		Double deposit = bank.getDeposit();
+		Double depositRate = bank.getDepositRate();
 
-		if (amount <= 0) {
-			return new BankResponse("還款金額錯誤");
+		if (amount <= 0 || amount > deposit + depositRate) {
+			return new BankResponse("還款金額不足或錯誤");
 		}
 
+		depositRate = depositRate - amount;
 		Double repaymentRate = loan.getLoanRate() - amount;
 		Double repayment = loan.getLoan();
+		
+		if (depositRate <= 0) {
+			deposit = deposit + depositRate;  
+			depositRate = 0.0;
+		}
 
 		// 先扣完利息再扣本金
 		if (repaymentRate <= 0) {
-			repayment = loan.getLoan() - Math.abs(repaymentRate); // 將剩餘金額作為本金還款
+			repayment = loan.getLoan() + repaymentRate;  // 將剩餘金額作為本金還款
 			repaymentRate = 0.0; // 將剩餘利息設置為零
 		}
 
 		loan.setLoan(repayment);
 		loan.setLoanRate(repaymentRate);
 		loanDao.save(loan);
+		
+		bank.setDeposit(deposit);
+		bank.setDepositRate(depositRate);
+		bankDao.save(bank);
 
 		return new BankResponse("繳款完成");
 	}

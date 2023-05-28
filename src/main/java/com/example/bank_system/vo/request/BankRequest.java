@@ -49,20 +49,18 @@ public class BankRequest {
 	public Integer amount;
 
 	public Integer installments;
-	
+
 	private String card2;
-	
+
 	private Integer withdraw;
-	
+
 	private Integer transferMoney;
+
+	private String verificationCode;
 
 	public BankRequest() {
 		super();
 	}
-
-	
-	
-	
 
 	public BankRequest(Bank bank, List<Bank> bankList, List<Loan> loans, String card, String name, String address,
 			String account, String password, String email, String phoneNumber, Double deposit, Double depositRate,
@@ -268,12 +266,13 @@ public class BankRequest {
 	public void setTransferMoney(Integer transferMoney) {
 		this.transferMoney = transferMoney;
 	}
-	
-	
 
-	
-	
+	public String getVerificationCode() {
+		return verificationCode;
+	}
 
-	
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
+	}
 
 }

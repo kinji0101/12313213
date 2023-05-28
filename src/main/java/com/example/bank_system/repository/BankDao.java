@@ -2,7 +2,7 @@ package com.example.bank_system.repository;
 
 
 import java.util.Optional;
-
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -15,18 +15,18 @@ import com.example.bank_system.entity.Bank;
 public interface BankDao extends JpaRepository<Bank, String> {
 	
 
-	Optional<Bank> findById(String card);
+	public Optional<Bank> findById(String card);
 	
-	Optional<Bank> findByAccount(String account);
+ 	public Optional<Bank> findByAccount(String account);
 
 	public List<Bank> findByCard(String card);
 	
 
-	List<Bank> findByPassword(String reqPassword);
+	public List<Bank> findByPassword(String reqPassword);
 
-	Bank findByName(String reqName);
+	public Bank findByName(String reqName);
 
-	Bank findByCardAndPassword(String reqCard, String reqPassword);
+	public Bank findByCardAndPassword(String reqCard, String reqPassword);
 	
 }
 
