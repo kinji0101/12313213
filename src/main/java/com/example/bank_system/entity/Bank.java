@@ -20,6 +20,10 @@ public class Bank {
 	// 貸款表
 	@OneToMany(mappedBy = "bank", cascade = CascadeType.ALL)
 	private List<Loan> loans;
+	
+	// 交易歷史紀錄
+	@OneToMany(mappedBy = "bank", cascade = CascadeType.ALL)
+    private List<TransactionHistory> transactionHistories;
 
 	// 卡號
 	@Id
@@ -209,6 +213,16 @@ public class Bank {
 
 	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
+	}
+
+
+	public List<TransactionHistory> getTransactionHistories() {
+		return transactionHistories;
+	}
+
+
+	public void setTransactionHistories(List<TransactionHistory> transactionHistories) {
+		this.transactionHistories = transactionHistories;
 	}
 
 	

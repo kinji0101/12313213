@@ -5,23 +5,39 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.bank_system.entity.Bank;
+import com.example.bank_system.entity.TransactionHistory;
 import com.example.bank_system.service.ifs.BankService;
+import com.example.bank_system.service.ifs.TransactionHistoryService;
 import com.example.bank_system.vo.request.BankRequest;
 import com.example.bank_system.vo.response.BankResponse;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 public class BankController {
 
 	@Autowired
 	private BankService bankService;
+	
+	@Autowired
+	private TransactionHistoryService transactionHistoryService;
 
+	 public BankController(BankService bankService) {
+	        this.bankService = bankService;
+	    }
+	 public BankController(TransactionHistoryService transactionHistoryService) {
+	        this.transactionHistoryService = transactionHistoryService;
+	    }
+	 
+	public BankController() {
+		super();
+	}
+	
+	
 	// 查詢用戶資料
 	@PostMapping("find_by_card")
 	public List<Bank> findByCard(@RequestBody BankRequest bankRequest) {
@@ -77,6 +93,12 @@ public class BankController {
 	private BankResponse transferMoney(@RequestBody BankRequest request) {
 		return bankService.transferMoney(request);
 	}
+	
+	@PostMapping("find_by_card2")
+	public List<TransactionHistory> findByCard2(@RequestBody BankRequest bankRequest) {
+		return transactionHistoryService.findByCard2(bankRequest.getCard());
+	}
+	
 
 }
 

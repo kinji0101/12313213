@@ -22,6 +22,8 @@ public class BankResponse {
 	private String card;
 
 	private String name;
+	
+	private String name2;
 
 	private String address;
 
@@ -231,6 +233,17 @@ public class BankResponse {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	
+	
+	
+
+	public String getName2() {
+		return name2;
+	}
+
+	public void setName2(String name2) {
+		this.name2 = name2;
+	}
 
 	public BankResponse(String name, Double deposit, Integer offer, String message) {
 		super();
@@ -239,11 +252,23 @@ public class BankResponse {
 		this.offer = offer;
 		this.message = message;
 	}
+	
+	
+	
+	
 
 	public BankResponse(String card, String name, String message) {
 		super();
 		this.card = card;
 		this.name = name;
+		this.message = message;
+	}
+	
+	public BankResponse(String card, String name,Double deposit, String message) {
+		super();
+		this.card = card;
+		this.name = name;
+		this.deposit = deposit;
 		this.message = message;
 	}
 	
@@ -267,14 +292,22 @@ public class BankResponse {
 		this.offer = offer;
 		this.message = message;
 	}
+	
+	
+
+	public BankResponse(String name , Double deposit, String name2,Integer offer, String message) {
+		super();
+		this.name = name;
+		this.name2 = name2;
+		this.deposit = deposit;
+		this.offer = offer;
+		this.message = message;
+	}
 
 	public BankResponse(Bank bank, String message) {
 		this.bank = bank;
 		this.message = message;
 		
 		}
-	
-	
-	
 
 }
