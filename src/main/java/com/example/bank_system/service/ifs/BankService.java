@@ -24,10 +24,10 @@ public interface BankService {
 	
 	BankResponse login2(BankRequest request);
 
-	BankResponse getDepositByCardAndPassword(BankRequest request);
-
 	BankResponse withdrawByCardAndPassword(BankRequest request);
 
 	BankResponse transferMoney(BankRequest request);
+
+	BankResponse getDepositByAccountAndPassword(BankRequest request);
 
 }

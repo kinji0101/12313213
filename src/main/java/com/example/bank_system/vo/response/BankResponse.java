@@ -273,6 +273,20 @@ public class BankResponse {
 		this.message = message;
 		
 		}
+
+	public BankResponse(String account, String card, String password, String name, Integer offer,  String message) {
+		super();
+		this.card = card;
+		this.name = name;
+		this.account = account;
+		this.offer = offer;
+		this.password = password;
+		this.message = message;
+	}
+
+	
+
+	
 	
 	
 	

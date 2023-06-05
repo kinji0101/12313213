@@ -195,29 +195,29 @@ public class BankServiceImpl implements BankService {
 
 	@Override
 	public BankResponse login(BankRequest request) {
-		String reqCard = request.getCard();
-		String reqPassword = request.getPassword();
-		if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword)) {
-			return new BankResponse("請確實輸入卡號和密碼");
+	    String reqAccount = request.getAccount();
+	    String reqPassword = request.getPassword();
+	    if (!StringUtils.hasText(reqAccount) || !StringUtils.hasText(reqPassword)) {
+	        return new BankResponse("請確實輸入帳號和密碼");
+	    }
+
+	    Optional<Bank> optionalAccount = bankDao.findByAccount(reqAccount);
+		if (!optionalAccount.isPresent()) {
+			return new BankResponse("帳號不存在");
 		}
 
-		Optional<Bank> optionalCard = bankDao.findById(reqCard);
-		if (!optionalCard.isPresent()) {
-			return new BankResponse("卡號不存在");
-		}
+	    List<Bank> pwd = bankDao.findByPassword(reqPassword);
+	    if (pwd.isEmpty()) {
+	        return new BankResponse("密碼不存在");
+	    }
 
-		List<Bank> pwd = bankDao.findByPassword(reqPassword);
-		if (pwd.isEmpty()) {
-			return new BankResponse("密碼不存在");
-		}
-
-		for (Bank bank : pwd) {
-			if (bank.getCard().equals(reqCard) && bank.getPassword().equals(reqPassword)) {
-				return new BankResponse(bank.getCard(), bank.getName(), bank.getOffer(), "登入成功");
-			}
-		}
-
-		return new BankResponse(reqCard, "帳號錯誤或密碼錯誤!");
+	    for (Bank bank : pwd) {
+	        if (bank.getAccount().equals(reqAccount) && bank.getPassword().equals(reqPassword)) {
+	            return new BankResponse(bank.getAccount(),bank.getCard(),bank.getPassword(),bank.getName(),bank.getOffer(), "登入成功");
+	        }
+	    }
+	    
+	    return new BankResponse(reqAccount, "帳號錯誤或密碼錯誤!");
 	}
 
 	@Override
@@ -250,21 +250,21 @@ public class BankServiceImpl implements BankService {
 
 	@Transactional
 	@Override
-	public BankResponse getDepositByCardAndPassword(BankRequest request) {
-		String reqCard = request.getCard();
+	public BankResponse getDepositByAccountAndPassword(BankRequest request) {
+		String reqAccount = request.getAccount();
 		String reqPassword = request.getPassword();
-		if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword)) {
+		if (!StringUtils.hasText(reqAccount) || !StringUtils.hasText(reqPassword)) {
 			return new BankResponse("請確實輸入卡號和密碼");
 		}
-		Optional<Bank> optionalCard = bankDao.findById(reqCard);
-		if (!optionalCard.isPresent()) {
-			return new BankResponse("卡號不存在");
+		Optional<Bank> optionalAccount  = bankDao.findByAccount(reqAccount);
+		if (!optionalAccount .isPresent()) {
+			return new BankResponse("帳號不存在");
 		}
-		Bank card = optionalCard.get();
+		Bank card = optionalAccount .get();
 		List<Bank> pwdList = bankDao.findByPassword(reqPassword);
 		boolean isPasswordMatched = false;
 		for (Bank pwd : pwdList) {
-			if (pwd.getCard().equals(reqCard)) {
+			if (pwd.getAccount().equals(reqAccount)) {
 				isPasswordMatched = true;
 				break;
 			}
@@ -361,64 +361,59 @@ public class BankServiceImpl implements BankService {
 	@Transactional
 	@Override
 	public BankResponse transferMoney(BankRequest request) {
-		String reqCard = request.getCard();
-		String reqPassword = request.getPassword();
-		String reqName = request.getName();
-		String reqCard2 = request.getCard2();
-		int reqTransMoney = request.getTransferMoney();
-		if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword) || !StringUtils.hasText(reqCard2)) {
-			return new BankResponse("請確實輸入卡號和密碼");
-		}
+	    String reqCard = request.getCard();
+	    String reqPassword = request.getPassword();
+	    String reqCard2 = request.getCard2();
+	    int reqTransMoney = request.getTransferMoney();
+	    if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword) || !StringUtils.hasText(reqCard2)) {
+	        return new BankResponse("請確實輸入卡號和密碼");
+	    }
 
-		Optional<Bank> OPTransferOut = bankDao.findById(reqCard);
-		Optional<Bank> OPTransferOut2 = bankDao.findById(reqCard2);
+	    Optional<Bank> OPTransferOut = bankDao.findById(reqCard);
+	    Optional<Bank> OPTransferOut2 = bankDao.findById(reqCard2);
 
-		if (OPTransferOut == null || OPTransferOut2 == null || !OPTransferOut2.isPresent()
-				|| !OPTransferOut.isPresent()) {
-			return new BankResponse("卡號不存在");
-		}
-		Bank transferOut = OPTransferOut.get();
-		Bank transferIn = bankDao.findByName(reqName);
-		if (transferIn == null) {
-			return new BankResponse("轉入帳戶不存在");
-		}
+	    if (!OPTransferOut.isPresent() || !OPTransferOut2.isPresent()) {
+	        return new BankResponse("卡號不存在");
+	    }
+	    Bank transferOut = OPTransferOut.get();
+	    Bank transferIn = OPTransferOut2.get();
 
-		if (transferIn.getCard().equals(transferOut.getCard())) {
-			return new BankResponse("無法轉帳給自己");
-		}
+	    if (transferIn.getCard().equals(transferOut.getCard())) {
+	        return new BankResponse("無法轉帳給自己");
+	    }
 
-		if (!transferOut.getCard().equals(reqCard) || !transferOut.getPassword().equals(reqPassword)) {
-			return new BankResponse("卡號和密碼不匹配");
-		}
+	    if (!transferOut.getCard().equals(reqCard) || !transferOut.getPassword().equals(reqPassword)) {
+	        return new BankResponse("卡號和密碼不匹配");
+	    }
 
-		if (!transferIn.getName().equals(reqName) || !transferIn.getCard().equals(reqCard2)) {
-			return new BankResponse("卡號與轉入者不匹配");
-		}
+	    if ( !transferIn.getCard().equals(reqCard2)) {
+	        return new BankResponse("卡號與轉入者不匹配");
+	    }
 
-		if (reqTransMoney <= 0) {
-			return new BankResponse("轉帳失敗");
-		}
+	    if (reqTransMoney <= 0) {
+	        return new BankResponse("轉帳失敗");
+	    }
 
-		if (reqTransMoney > transferOut.getDeposit()) {
-			return new BankResponse("轉帳失敗");
-		}
-		int offerCount = request.getOffer();
+	    if (reqTransMoney > transferOut.getDeposit()) {
+	        return new BankResponse("轉帳失敗");
+	    }
 
-		int actualTransMoney = reqTransMoney;
+	    int offerCount = request.getOffer();
+	    int actualTransMoney = reqTransMoney;
 
-		if (offerCount > 0) { // 若使用者有優惠次數
-			transferOut.setOffer(offerCount - 1); // 減少一次優惠次數
-			actualTransMoney = reqTransMoney; // 實際轉帳金額不變
-		} else { // 若使用者無優惠次數
-			actualTransMoney += 10; // 扣除10元轉帳費用
-		}
-		transferOut.setDeposit(transferOut.getDeposit() - actualTransMoney);
-		transferIn.setDeposit(transferIn.getDeposit() + actualTransMoney);
+	    if (offerCount > 0) { // 若使用者有優惠次數
+	        transferOut.setOffer(offerCount - 1); // 減少一次優惠次數
+	        actualTransMoney = reqTransMoney; // 實際轉帳金額不變
+	    } else { // 若使用者無優惠次數
+	        actualTransMoney += 10; // 扣除10元轉帳費用
+	    }
+	    transferOut.setDeposit(transferOut.getDeposit() - actualTransMoney);
+	    transferIn.setDeposit(transferIn.getDeposit() + actualTransMoney);
 
-		bankDao.save(transferOut);
-		bankDao.save(transferIn);
+	    bankDao.save(transferOut);
+	    bankDao.save(transferIn);
 
-		return new BankResponse(transferOut.getName(), transferOut.getDeposit(), transferOut.getOffer(), "轉帳成功");
+	    return new BankResponse(transferOut.getName(), transferOut.getDeposit(), transferOut.getOffer(), "轉帳成功");
 	}
 
 }

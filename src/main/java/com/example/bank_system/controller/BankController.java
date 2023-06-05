@@ -62,11 +62,11 @@ public class BankController {
 		return bankService.login2(request);	
 	}
 
-	@PostMapping("/get_Deposit_By_Card_And_Password")
-	private BankResponse getDepositByCardAndPassword(@RequestBody BankRequest request, HttpSession httpSession) {
+	@PostMapping("/get_Deposit_By_Account_And_Password")
+	private BankResponse getDepositByAccountAndPassword(@RequestBody BankRequest request, HttpSession httpSession) {
 		httpSession.setAttribute("card", request.getCard());
 		httpSession.setAttribute("password", request.getPassword());
-		return bankService.getDepositByCardAndPassword(request);
+		return bankService.getDepositByAccountAndPassword(request);
 	}
 
 	@PostMapping("/withdraw_By_Card_And_Password")
