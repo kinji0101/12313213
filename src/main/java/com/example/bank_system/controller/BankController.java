@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.bank_system.entity.Bank;
-import com.example.bank_system.entity.TransactionHistory;
 import com.example.bank_system.service.ifs.BankService;
 import com.example.bank_system.service.ifs.TransactionHistoryService;
 import com.example.bank_system.vo.request.BankRequest;
@@ -25,6 +24,8 @@ public class BankController {
 	
 	@Autowired
 	private TransactionHistoryService transactionHistoryService;
+	
+
 
 	 public BankController(BankService bankService) {
 	        this.bankService = bankService;
@@ -66,7 +67,7 @@ public class BankController {
 
 	@PostMapping("/login")
 	private BankResponse login(@RequestBody BankRequest request, HttpSession httpSession) {
-		httpSession.setAttribute("card", request.getCard());
+		httpSession.setAttribute("account", request.getAccount());
 		httpSession.setAttribute("password", request.getPassword());
 		return bankService.login(request);	
 	}
@@ -94,10 +95,7 @@ public class BankController {
 		return bankService.transferMoney(request);
 	}
 	
-	@PostMapping("find_by_card2")
-	public List<TransactionHistory> findByCard2(@RequestBody BankRequest bankRequest) {
-		return transactionHistoryService.findByCard2(bankRequest.getCard());
-	}
+	
 	
 
 }

@@ -3,6 +3,7 @@ package com.example.bank_system.service.impl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Executors;
@@ -202,31 +203,30 @@ public class BankServiceImpl implements BankService , TransactionHistoryService{
 
 	@Override
 	public BankResponse login(BankRequest request) {
-		String reqCard = request.getCard();
-		String reqPassword = request.getPassword();
-		if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword)) {
-			return new BankResponse("請確實輸入卡號和密碼");
+	    String reqAccount = request.getAccount();
+	    String reqPassword = request.getPassword();
+	    if (!StringUtils.hasText(reqAccount) || !StringUtils.hasText(reqPassword)) {
+	        return new BankResponse("請確實輸入帳號和密碼");
+	    }
+
+	    Optional<Bank> optionalAccount = bankDao.findByAccount(reqAccount);
+		if (!optionalAccount.isPresent()) {
+			return new BankResponse("帳號不存在");
 		}
 
-		Optional<Bank> optionalCard = bankDao.findById(reqCard);
-		if (!optionalCard.isPresent()) {
-			return new BankResponse("卡號不存在");
-		}
+	    List<Bank> pwd = bankDao.findByPassword(reqPassword);
+	    if (pwd.isEmpty()) {
+	        return new BankResponse("密碼不存在");
+	    }
 
-		List<Bank> pwd = bankDao.findByPassword(reqPassword);
-		if (pwd.isEmpty()) {
-			return new BankResponse("密碼不存在");
-		}
-
-		for (Bank bank : pwd) {
-			if (bank.getCard().equals(reqCard) && bank.getPassword().equals(reqPassword)) {
-				return new BankResponse(bank.getCard(), bank.getName(), bank.getOffer(), "登入成功");
-			}
-		}
-
-		return new BankResponse(reqCard, "帳號錯誤或密碼錯誤!");
+	    for (Bank bank : pwd) {
+	        if (bank.getAccount().equals(reqAccount) && bank.getPassword().equals(reqPassword)) {
+	            return new BankResponse(bank.getAccount(),bank.getCard(),bank.getPassword(),bank.getName(),reqPassword, reqPassword, reqPassword, null, null, null, null, bank.getOffer(), null, null, "登入成功");
+	        }
+	    }
+	    
+	    return new BankResponse(reqAccount, "帳號錯誤或密碼錯誤!");
 	}
-
 	@Override
 	public BankResponse login2(BankRequest request) {
 		String reqAccount = request.getAccount();
@@ -381,7 +381,7 @@ public class BankServiceImpl implements BankService , TransactionHistoryService{
 	public BankResponse transferMoney(BankRequest request) {
 	    String reqCard = request.getCard();
 	    String reqPassword = request.getPassword();
-	    String reqName = request.getName();
+	    
 	    String reqCard2 = request.getCard2();
 	    int reqTransMoney = request.getTransferMoney();
 	    if (!StringUtils.hasText(reqCard) || !StringUtils.hasText(reqPassword) || !StringUtils.hasText(reqCard2)) {
@@ -397,19 +397,17 @@ public class BankServiceImpl implements BankService , TransactionHistoryService{
 	    Bank transferOut = optionalTransferOut.get();
 	    Bank transferIn = optionalTransferIn.get();
 	    if (!transferOut.getPassword().equals(reqPassword)) {
-	        return new BankResponse("密碼錯誤");
+	        return new BankResponse("卡號和密碼不匹配");
 	    }
-	    if (!transferIn.getName().equals(reqName)) {
-	        return new BankResponse("轉入帳戶不存在");
-	    }
+	    
 	    if (transferOut.getCard().equals(transferIn.getCard())) {
 	        return new BankResponse("無法轉帳給自己");
 	    }
 	    if (reqTransMoney <= 0) {
-	        return new BankResponse("轉帳金額不合法");
+	        return new BankResponse("轉帳失敗");
 	    }
 	    if (reqTransMoney > transferOut.getDeposit()) {
-	        return new BankResponse("轉帳失敗，餘額不足");
+	        return new BankResponse("轉帳失敗");
 	    }
 
 	    int offerCount = request.getOffer();
@@ -454,11 +452,5 @@ public class BankServiceImpl implements BankService , TransactionHistoryService{
 	    return new BankResponse(transferOut.getName(), transferOut.getDeposit(),transferIn.getName(),transferOut.getOffer(), "轉帳成功");
 	}
 	
-	
-	@Override
-	public
-	List<TransactionHistory> findByCard2(String card){
-		return transactionHistoryDao.findByCard(card);
-	}
 
 }

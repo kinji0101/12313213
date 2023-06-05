@@ -3,7 +3,6 @@ package com.example.bank_system.service.ifs;
 import java.util.List;
 
 import com.example.bank_system.entity.Bank;
-import com.example.bank_system.entity.TransactionHistory;
 import com.example.bank_system.vo.request.BankRequest;
 import com.example.bank_system.vo.response.BankResponse;
 

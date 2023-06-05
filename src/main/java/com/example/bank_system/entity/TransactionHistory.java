@@ -11,38 +11,40 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "transaction_history")
-public class TransactionHistory {
+	@Entity
+	@Table(name = "transaction_history")
+	public class TransactionHistory {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	    @Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "card")
-    private Bank bank;
+	    @ManyToOne
+	    @JoinColumn(name = "number")
+	    private Bank bank;
 
-    @Column(name = "transaction_date")
-    private LocalDateTime transactionDate;
+	    @Column(name = "transaction_date")
+	    private LocalDateTime transactionDate;
 
-    @Column(name = "transaction_type")
-    private String transactionType;
+	    @Column(name = "transaction_type")
+	    private String transactionType;
 
-    @Column(name = "transaction_amount")
-    private Integer transactionAmount;
-    
-    @Column(name = "transaction_who")
-    private String transactionWho;
-    
-    @Column(name = "transaction_deposit")
-    private Double transactionDeposit;
-    
+	    @Column(name = "transaction_amount")
+	    private Integer transactionAmount;
+
+	    @Column(name = "transaction_who")
+	    private String transactionWho;
+
+	    @Column(name = "transaction_deposit")
+	    private Double transactionDeposit;
+	 
     
 
 	public TransactionHistory() {
 		super();
 	}
+
+
 
 
 	public TransactionHistory(Long id, Bank bank, LocalDateTime transactionDate, String transactionType,
@@ -58,6 +60,8 @@ public class TransactionHistory {
 	}
 
 
+
+
 	public Long getId() {
 		return id;
 	}
@@ -66,13 +70,17 @@ public class TransactionHistory {
 		this.id = id;
 	}
 
+
+
 	public Bank getBank() {
 		return bank;
 	}
 
+
 	public void setBank(Bank bank) {
 		this.bank = bank;
 	}
+
 
 	public LocalDateTime getTransactionDate() {
 		return transactionDate;
@@ -117,7 +125,5 @@ public class TransactionHistory {
 	public void setTransactionDeposit(Double transactionDeposit) {
 		this.transactionDeposit = transactionDeposit;
 	}
-    
-    
-    
+  
 }
