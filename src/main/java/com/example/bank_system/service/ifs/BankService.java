@@ -3,6 +3,7 @@ package com.example.bank_system.service.ifs;
 import java.util.List;
 
 import com.example.bank_system.entity.Bank;
+import com.example.bank_system.entity.TransactionHistory;
 import com.example.bank_system.vo.request.BankRequest;
 import com.example.bank_system.vo.response.BankResponse;
 
@@ -29,5 +30,9 @@ public interface BankService {
 	BankResponse transferMoney(BankRequest request);
 
 	BankResponse getDepositByAccountAndPassword(BankRequest request);
+
+	public BankResponse findTransactionHistory(BankRequest request);
+
+	
 
 }

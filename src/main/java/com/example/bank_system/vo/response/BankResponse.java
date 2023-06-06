@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.example.bank_system.entity.Bank;
+import com.example.bank_system.entity.TransactionHistory;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,10 +19,15 @@ public class BankResponse {
 
 	@JsonProperty("loans")
 	private List<String> Loans;
+	
+	@JsonProperty("transactionHistory")
+	private List<TransactionHistory> transactionHistory;
 
 	private String card;
 
 	private String name;
+	
+	private String name2;
 
 	private String address;
 
@@ -48,17 +54,39 @@ public class BankResponse {
 	private Integer installments;
 
 	private String message;
+	
+	private String number;
+	
+	private LocalDateTime transactionDate;
+	
+	private String transactionType;
+	
+	private Integer transactionAmount;
+	
+	private String transactionWho;
+	
+	private Double transactionDeposit;
 
 	public BankResponse() {
 		super();
 	}
 
-	public BankResponse(String card, String name, String address, String account, String password, String email,
+	
+
+	public BankResponse(Bank bank, List<Bank> bankList, List<String> loans, List<TransactionHistory> transactionHistory,
+			String card, String name, String name2, String address, String account, String password, String email,
 			String phoneNumber, Double deposit, Double depositRate, Double loan, Double loanRate, Integer offer,
-			LocalDateTime createDate, Integer installments, String message) {
+			LocalDateTime createDate, Integer installments, String message, String number,
+			LocalDateTime transactionDate, String transactionType, Integer transactionAmount, String transactionWho,
+			Double transactionDeposit) {
 		super();
+		this.bank = bank;
+		this.bankList = bankList;
+		Loans = loans;
+		this.transactionHistory = transactionHistory;
 		this.card = card;
 		this.name = name;
+		this.name2 = name2;
 		this.address = address;
 		this.account = account;
 		this.password = password;
@@ -72,7 +100,15 @@ public class BankResponse {
 		this.createDate = createDate;
 		this.installments = installments;
 		this.message = message;
+		this.number = number;
+		this.transactionDate = transactionDate;
+		this.transactionType = transactionType;
+		this.transactionAmount = transactionAmount;
+		this.transactionWho = transactionWho;
+		this.transactionDeposit = transactionDeposit;
 	}
+
+
 
 	public BankResponse(String message) {
 		this.message = message;
@@ -231,6 +267,105 @@ public class BankResponse {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	
+	
+	
+
+	public String getName2() {
+		return name2;
+	}
+
+	public void setName2(String name2) {
+		this.name2 = name2;
+	}
+	
+	
+	
+	
+
+	public List<TransactionHistory> getTransactionHistory() {
+		return transactionHistory;
+	}
+
+
+
+	public void setTransactionHistory(List<TransactionHistory> transactionHistory) {
+		this.transactionHistory = transactionHistory;
+	}
+
+
+
+	public String getNumber() {
+		return number;
+	}
+
+
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+
+
+	public LocalDateTime getTransactionDate() {
+		return transactionDate;
+	}
+
+
+
+	public void setTransactionDate(LocalDateTime transactionDate) {
+		this.transactionDate = transactionDate;
+	}
+
+
+
+	public String getTransactionType() {
+		return transactionType;
+	}
+
+
+
+	public void setTransactionType(String transactionType) {
+		this.transactionType = transactionType;
+	}
+
+
+
+	public Integer getTransactionAmount() {
+		return transactionAmount;
+	}
+
+
+
+	public void setTransactionAmount(Integer transactionAmount) {
+		this.transactionAmount = transactionAmount;
+	}
+
+
+
+	public String getTransactionWho() {
+		return transactionWho;
+	}
+
+
+
+	public void setTransactionWho(String transactionWho) {
+		this.transactionWho = transactionWho;
+	}
+
+
+
+	public Double getTransactionDeposit() {
+		return transactionDeposit;
+	}
+
+
+
+	public void setTransactionDeposit(Double transactionDeposit) {
+		this.transactionDeposit = transactionDeposit;
+	}
+
+
 
 	public BankResponse(String name, Double deposit, Integer offer, String message) {
 		super();
@@ -239,11 +374,23 @@ public class BankResponse {
 		this.offer = offer;
 		this.message = message;
 	}
+	
+	
+	
+	
 
 	public BankResponse(String card, String name, String message) {
 		super();
 		this.card = card;
 		this.name = name;
+		this.message = message;
+	}
+	
+	public BankResponse(String card, String name,Double deposit, String message) {
+		super();
+		this.card = card;
+		this.name = name;
+		this.deposit = deposit;
 		this.message = message;
 	}
 	
@@ -267,12 +414,24 @@ public class BankResponse {
 		this.offer = offer;
 		this.message = message;
 	}
+	
+	
+
+	public BankResponse(String name , Double deposit, String name2,Integer offer, String message) {
+		super();
+		this.name = name;
+		this.name2 = name2;
+		this.deposit = deposit;
+		this.offer = offer;
+		this.message = message;
+	}
 
 	public BankResponse(Bank bank, String message) {
 		this.bank = bank;
 		this.message = message;
 		
 		}
+
 
 	public BankResponse(String account, String card, String password, String name, Integer offer,  String message) {
 		super();
@@ -283,11 +442,6 @@ public class BankResponse {
 		this.password = password;
 		this.message = message;
 	}
-
-	
-
-	
-	
 	
 	
 

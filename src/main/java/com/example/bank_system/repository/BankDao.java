@@ -1,10 +1,8 @@
 package com.example.bank_system.repository;
 
 
-import java.util.Optional;
-import java.time.LocalDateTime;
 import java.util.List;
-
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -28,5 +26,7 @@ public interface BankDao extends JpaRepository<Bank, String> {
 
 	public Bank findByCardAndPassword(String reqCard, String reqPassword);
 	
+
+
 }
 

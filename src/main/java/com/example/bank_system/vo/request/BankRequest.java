@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.bank_system.entity.Bank;
 import com.example.bank_system.entity.Loan;
+import com.example.bank_system.entity.TransactionHistory;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BankRequest {
@@ -17,6 +18,9 @@ public class BankRequest {
 
 	@JsonProperty("loans")
 	private List<Loan> loans;
+	
+	@JsonProperty("transactionHistory")
+	private List<TransactionHistory> transactionHistory;
 
 	public String card;
 
@@ -57,19 +61,24 @@ public class BankRequest {
 	private Integer transferMoney;
 
 	private String verificationCode;
+	
+	private String number;
 
 	public BankRequest() {
 		super();
 	}
 
-	public BankRequest(Bank bank, List<Bank> bankList, List<Loan> loans, String card, String name, String address,
-			String account, String password, String email, String phoneNumber, Double deposit, Double depositRate,
-			Double loan, Double loanRate, Integer id, Integer offer, LocalDateTime createDate, Integer amount,
-			Integer installments, String card2, Integer withdraw, Integer transferMoney) {
+	
+	public BankRequest(Bank bank, List<Bank> bankList, List<Loan> loans, List<TransactionHistory> transactionHistory,
+			String card, String name, String address, String account, String password, String email, String phoneNumber,
+			Double deposit, Double depositRate, Double loan, Double loanRate, Integer id, Integer offer,
+			LocalDateTime createDate, Integer amount, Integer installments, String card2, Integer withdraw,
+			Integer transferMoney, String verificationCode, String number) {
 		super();
 		this.bank = bank;
 		this.bankList = bankList;
 		this.loans = loans;
+		this.transactionHistory = transactionHistory;
 		this.card = card;
 		this.name = name;
 		this.address = address;
@@ -89,7 +98,11 @@ public class BankRequest {
 		this.card2 = card2;
 		this.withdraw = withdraw;
 		this.transferMoney = transferMoney;
+		this.verificationCode = verificationCode;
+		this.number = number;
 	}
+
+
 
 	public String getCard2() {
 		return card2;
@@ -274,5 +287,27 @@ public class BankRequest {
 	public void setVerificationCode(String verificationCode) {
 		this.verificationCode = verificationCode;
 	}
+
+
+	public List<TransactionHistory> getTransactionHistory() {
+		return transactionHistory;
+	}
+
+
+	public void setTransactionHistory(List<TransactionHistory> transactionHistory) {
+		this.transactionHistory = transactionHistory;
+	}
+
+
+	public String getNumber() {
+		return number;
+	}
+
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+	
+	
 
 }

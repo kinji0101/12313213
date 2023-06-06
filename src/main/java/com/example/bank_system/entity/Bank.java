@@ -17,10 +17,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Bank {
 
-	// 貸款表
-	@OneToMany(mappedBy = "bank", cascade = CascadeType.ALL)
-	private List<Loan> loans;
 
+	
 	// 卡號
 	@Id
 	@Column(name = "card")
@@ -29,6 +27,10 @@ public class Bank {
 	// 姓名
 	@Column(name = "name")
 	private String name;
+	
+	// 信箱
+	@Column(name = "email")
+	private String email;
 
 	// 戶籍地址
 	@Column(name = "address")
@@ -42,9 +44,6 @@ public class Bank {
 	@Column(name = "password")
 	private String password;
 
-	// 信箱
-	@Column(name = "email")
-	private String email;
 
 	// 手機號碼
 	@Column(name = "phonenumber")
@@ -57,6 +56,10 @@ public class Bank {
 	// 存款利息
 	@Column(name = "depositrate")
 	private Double depositRate;
+	
+	// 貸款表
+	@OneToMany(mappedBy = "bank", cascade = CascadeType.ALL)
+	private List<Loan> loans;
 
 
 	// 轉帳優惠
@@ -73,9 +76,9 @@ public class Bank {
 	}
 
 
-	public Bank(List<Loan> loans, String card, String name, String address, String account, String password,
-			String email, String phoneNumber, Double deposit, Double depositRate, Integer offer,
-			LocalDateTime createDate) {
+	public Bank(List<Loan> loans, String card, String name,
+			String address, String account, String password, String email, String phoneNumber, Double deposit,
+			Double depositRate, Integer offer, LocalDateTime createDate) {
 		super();
 		this.loans = loans;
 		this.card = card;
@@ -90,6 +93,7 @@ public class Bank {
 		this.offer = offer;
 		this.createDate = createDate;
 	}
+
 
 
 	public List<Loan> getLoans() {
@@ -210,6 +214,7 @@ public class Bank {
 	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
 	}
+
 
 	
 }
